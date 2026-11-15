@@ -4,7 +4,7 @@
 
 A phone becomes a bridge. A book becomes a shield. A pen becomes a blade.
 
-Rift Walker is a hands-on demo that makes learning Google's Decision API—and decision APIs in general—fun. Clone the repository, try the camera-powered game, and follow how an image becomes a set of answers that your code can act on. Show a phone to build a bridge, a book to raise a shield, or a pen to enable an attack. The demo connects each moment to a simple pattern: define a question, send input, check the response, and apply a rule. Start with no-key practice to explore the game, then configure Gemini to try real API decisions and experiment with the criteria yourself.
+Rift Walker is a hands-on demo that makes learning Google's Decision API and decision APIs in general fun. Clone the repository, try the camera-powered game, and follow how an image becomes a set of answers that your code can act on. Show a phone to build a bridge, a book to raise a shield, or a pen to enable an attack. The demo connects each moment to a simple pattern: define a question, send input, check the response, and apply a rule. Start with no-key practice to explore the game, then configure Gemini to try real API decisions and experiment with the criteria yourself.
 
 ![A real demo run: a phone in the camera view and a woven bridge spanning the gap](docs/images/demo-03-phone-bridge.png)
 
@@ -58,7 +58,7 @@ Hold a phone, closed notebook, ruler or cardboard inside the camera guide. Gemin
 
 *Demo frame: the run displays **LIVE GEMINI RUN**, a phone in the camera view, and a completed bridge. The live-item panel is checking another frame; recognition updates periodically while the woven bridge remains in the world.*
 
-### 4. Face the Rift Warden — Reality Raid
+### 4. Face the Rift Warden - Reality Raid
 
 The second chapter switches to first person. The boss is rendered with perspective geometry over the camera feed when a camera is connected. In live mode, the opening attack cycle waits until the first usable shield, reflection or strike prop has been accepted.
 
@@ -69,7 +69,7 @@ The second chapter switches to first person. The boss is rendered with perspecti
 
 The camera-free arena above is the practice-state illustration. With a live feed, the game adds the room behind the boss. Located object regions can be composited back in front of it; this is approximate foreground compositing, not depth sensing or room mapping.
 
-### 5. Raise a book — Aegis
+### 5. Raise a book - Aegis
 
 A recognized book, lid or broad object equips **Aegis**. Keep it in view: live-mode shielding does not require an open-palm gesture or a separate guard button. An incoming blast reaches the shield, produces an impact effect, then travels back toward the Warden.
 
@@ -82,7 +82,7 @@ A recognized book, lid or broad object equips **Aegis**. Keep it in view: live-m
 
 When object localization is available, the shield follows the located object's region rather than the wrist. In practice mode, equip Cardboard and hold **K** to guard.
 
-### 6. Sweep a pen — Riftblade
+### 6. Sweep a pen - Riftblade
 
 Show a pen, phone or suitable elongated prop and wait for STRIKE to light. Sweep it smoothly left or right. Local motion tracking converts the swipe into an attack, while the boss's current phase determines damage. Hitting an exposed core is more effective than striking its armor.
 

@@ -13,7 +13,7 @@
 
 The updated multi-power recognition endpoint needs a server restart and a real-object playthrough. The UI detects an old server. Older entries below are historical notes.
 
-# Verification status — 13 November 2026
+# Verification status - 13 November 2026
 
 ## Confirmed locally
 

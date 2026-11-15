@@ -44,7 +44,7 @@ function refreshUI(){
   document.body.classList.toggle('raid-mode',!!g.raid);
   $('health').textContent=Array.from({length:5},(_,i)=>i<g.player.hp?'♥':'♡').join(' ');$('health').setAttribute('aria-label',`${g.player.hp} of 5 health`);$('shards').textContent=`✦ ${g.shards.filter(s=>s.taken).length} / 5`;$('timer').textContent=timeLabel(g.time);
   const boss=!!g.boss;$('boss-controls').hidden=!boss;$('traverse-controls').hidden=boss;$('chapter-number').textContent=boss?'CHAPTER 02 / 02':'CHAPTER 01 / 02';$('chapter-title').textContent=boss?'The Warden has crossed over.':'The Broken Reach';$('step-reach').classList.toggle('active',!boss);$('step-warden').classList.toggle('active',boss);
-  $('boss-hud').hidden=!boss||g.phase==='won'||g.phase==='dead';if(boss){$('boss-health').style.width=`${g.boss.hp/g.boss.maxHp*100}%`;$('boss-state').textContent=g.raid?.awaitingItem?'SHOW A BOOK OR PEN TO BEGIN':g.boss.state==='exposed'?'CORE EXPOSED — STRIKE':g.boss.state==='windup'?`${g.boss.attack==='beam'?'RIFT BEAM':'ORB VOLLEY'} IN ${Math.max(0,g.boss.timer).toFixed(1)}s`:g.boss.state.toUpperCase();}
+  $('boss-hud').hidden=!boss||g.phase==='won'||g.phase==='dead';if(boss){$('boss-health').style.width=`${g.boss.hp/g.boss.maxHp*100}%`;$('boss-state').textContent=g.raid?.awaitingItem?'SHOW A BOOK OR PEN TO BEGIN':g.boss.state==='exposed'?'CORE EXPOSED - STRIKE':g.boss.state==='windup'?`${g.boss.attack==='beam'?'RIFT BEAM':'ORB VOLLEY'} IN ${Math.max(0,g.boss.timer).toFixed(1)}s`:g.boss.state.toUpperCase();}
   let [title,detail]=objective(g);if($('auto-weave').checked&&api.configured&&g.phase==='traverse'&&g.bridges.length<2){title='Show an object. Mend the rift.';detail='Approach a glowing gap and hold a phone, notebook or ruler inside the camera guide. The bridge weaves automatically.';}$('objective-title').textContent=title;$('objective-detail').textContent=detail;
   const text=g.practice?'PRACTICE RUN':g.stats.scans?'LIVE GEMINI RUN':'LOCAL ADVENTURE';$('run-label').textContent=`${text} ✦`;
   $('weave').disabled=g.phase!=='traverse';$('weave').hidden=boss;
@@ -162,7 +162,7 @@ function updateCombatUI(now){
   $('raid-cue').hidden=!g.raid;
   if(g.raid){
     const r=g.raid;
-    const cue=r.awaitingItem?'SHOW AN ITEM TO BEGIN':r.parry>0?'RETURN TO SENDER':r.slash>0?'RIFT STRIKE':g.boss.state==='exposed'?'CORE OPEN — STRIKE NOW':r.shieldActive?'SHIELD READY — HOLD YOUR GROUND':g.boss.state==='windup'?'INCOMING — RAISE YOUR SHIELD':strike?'BLADE READY — SWIPE TO STRIKE':'SHOW A BOOK TO DEFEND';
+    const cue=r.awaitingItem?'SHOW AN ITEM TO BEGIN':r.parry>0?'RETURN TO SENDER':r.slash>0?'RIFT STRIKE':g.boss.state==='exposed'?'CORE OPEN - STRIKE NOW':r.shieldActive?'SHIELD READY - HOLD YOUR GROUND':g.boss.state==='windup'?'INCOMING - RAISE YOUR SHIELD':strike?'BLADE READY - SWIPE TO STRIKE':'SHOW A BOOK TO DEFEND';
     $('raid-cue').textContent=cue;$('raid-cue').dataset.kind=r.parry>0||r.shieldActive?'shield':g.boss.state==='exposed'?'strike':'waiting';
   }
 }
