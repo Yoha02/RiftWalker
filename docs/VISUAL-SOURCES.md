@@ -2,19 +2,21 @@
 
 ## Original demo screenshots
 
-The README hero and steps 1–3 use original screenshots supplied by the project owner for the public walkthrough. Each PNG is copied byte-for-byte from the supplied file, with only its filename changed. No gameplay state, camera content, or status text has been retouched.
+The README hero and steps 1–5 use original screenshots supplied by the project owner for the public walkthrough. Each PNG is copied byte-for-byte from the supplied file, with only its filename changed. No gameplay state, camera content, or status text has been retouched.
 
 | Asset | Visible demo state |
 | --- | --- |
 | `demo-01-hand-controls.png` | Traveler beside the first gap; open hand and tracking landmarks in the camera panel; 1/5 light |
 | `demo-02-jump.png` | Traveler airborne; pinching hand visible in the camera panel |
 | `demo-03-phone-bridge.png` | Phone held horizontally; completed bridge; LIVE GEMINI RUN; 2/5 light |
+| `demo-04-book-shield.png` | Book visible; Aegis online; SHIELD active; BOUNCED BACK; Warden core open |
+| `demo-05-pen-strike.png` | Pen visible; STRIKE active; Located: pen; golden slash; 5 damage against armor |
 
-The screenshots document visible moments, not measured recognition accuracy or input latency. The bridge frame shows a completed path while the live-item panel is checking another snapshot. The original book-shield and pen-strike screenshots have not yet been added to the repository.
+The screenshots document visible moments, not measured recognition accuracy or input latency. The bridge frame shows a completed path while the live-item panel is checking another snapshot. The book-shield and pen-strike screenshots appear in steps 4 and 5, respectively. The pen-strike frame does not show an exposed-core hit.
 
 ## Renderer illustrations
 
-README steps 4–6 use **documentation replays of actual game drawing code**, with deterministic, manually equipped practice states. They are not screenshots of successful live model decisions and contain no camera feed, people or API responses. The earlier traversal illustrations remain available as supplementary assets but are no longer used in the README.
+README step 6 uses a **documentation replay of actual game drawing code**, with a deterministic, manually equipped practice state. The renderer illustrations are not screenshots of successful live model decisions and contain no camera feed, people or API responses. The earlier traversal, boss-introduction and shield illustrations remain available as supplementary assets but are no longer used in the README.
 
 `scripts/render-walkthrough.mjs` calls the existing game logic to build a bridge, enter the boss encounter, reflect a projectile and perform a strike. It invokes the current rendering functions through a small Canvas-to-SVG adapter. The framing, titles and captions are documentation annotations, not the application's interface. The resulting SVGs preserve the scene geometry; their PNG versions omit alpha-gradient glow/vignette layers and flatten the sky gradient for compatibility with the rasterizer. Canvas shadows are not reproduced.
 

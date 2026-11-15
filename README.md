@@ -10,7 +10,7 @@ Riftmender is a camera-powered adventure built in the **RiftWalker** repository.
 
 **[Visual walkthrough](#visual-walkthrough)** · **[Run locally](#run-locally)** · **[How the AI works](#how-the-ai-works)** · **[Demo talk track](docs/DEMO.md)**
 
-> **About the images:** the opening image and steps 1–3 are original screenshots supplied from a demo run. Steps 4–6 are clearly labelled practice-state illustrations made with the game drawing code. See [Visual sources](docs/VISUAL-SOURCES.md) for provenance.
+> **About the images:** the opening image and steps 1–5 are original screenshots supplied from demo runs. Step 6 is a clearly labelled practice-state illustration made with the game drawing code. See [Visual sources](docs/VISUAL-SOURCES.md) for provenance.
 
 ## What makes it different
 
@@ -65,9 +65,11 @@ The second chapter switches to first person. The boss is rendered with perspecti
 **You do:** show a book or pen, or choose **Boss demo** to jump straight to this encounter.  
 **The game does:** telegraphs incoming attacks and exposes its core between attack phases.
 
-![Practice-state illustration: the perspective Rift Warden in its procedural arena, without a camera backdrop](docs/images/04-reality-raid.png)
+![Original demo screenshot: the Rift Warden over the camera feed, with a held book, Aegis online and a returned blast](docs/images/demo-04-book-shield.png)
 
-The camera-free arena above is the practice-state illustration. With a live feed, the game adds the room behind the boss. Located object regions can be composited back in front of it; this is approximate foreground compositing, not depth sensing or room mapping.
+*Demo frame: a book is visible in the camera panel, **Aegis online** and **SHIELD** are active, and the game reports **BOUNCED BACK** while the Warden's core is open.*
+
+With a live feed, the game adds the room behind the boss. Located object regions can be composited back in front of it; this is approximate foreground compositing, not depth sensing or room mapping.
 
 ### 5. Raise a book — Aegis
 
@@ -76,9 +78,11 @@ A recognized book, lid or broad object equips **Aegis**. Keep it in view: live-m
 **You do:** wait for SHIELD to light, then hold the object in view.  
 **The game does:** blocks the hit and sends the projectile back to damage the boss.
 
-![Practice-state illustration: shield impact and a returning projectile beside the Warden](docs/images/05-aegis.png)
+![Original demo screenshot: a held pen, an active STRIKE indicator and a golden slash dealing 5 damage against the Warden's armor](docs/images/demo-05-pen-strike.png)
 
-When object localization is available, the shield follows the located object's region rather than the wrist. In practice mode, equip Cardboard and hold **K** to guard. The image shows that practice-state effect, without a real book or camera frame.
+*Demo frame: switching to a pen enables the attack shown here, with **STRIKE** lit, **Located: pen**, and 5 damage against armor. The book-shield reflection is shown in step 4; pen strikes are explained in step 6.*
+
+When object localization is available, the shield follows the located object's region rather than the wrist. In practice mode, equip Cardboard and hold **K** to guard.
 
 ### 6. Sweep a pen — Riftblade
 
