@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101b25"><title>Riftmender — Your world is the inventory</title><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><path d=%22M32 3 57 32 32 61 7 32Z%22 fill=%22%2377e7d5%22/><path d=%22m34 12-12 23h10l-3 17 14-26H32Z%22 fill=%22%23101b25%22/></svg>"><style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root{--bg:#0c141d;--panel:#131f2b;--line:#263541;--muted:#8c9da9;--ink:#e9f1ef;--mint:#94ead6;--gold:#f5c58e;--font:'DM Sans',system-ui,sans-serif;--display:'Space Grotesk',var(--font)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 30% -20%,#243b44 0,transparent 60%),var(--bg);color:var(--ink);font-family:var(--font);font-size:14px}button,select{font:inherit}button,a,select,input{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}button:focus-visible,a:focus-visible,select:focus-visible,canvas:focus-visible,summary:focus-visible{outline:2px solid var(--mint);outline-offset:4px}button{border:0}a{color:inherit;text-decoration:none}[hidden]{display:none!important}.topbar{height:84px;margin:0 36px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:28px}.brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:700;letter-spacing:2px;font-size:22px}.brand-light{font-weight:400;color:#c1d0ce}.brand-mark{display:grid;place-items:center;width:34px;height:40px;color:var(--mint);border:1px solid #527a75;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:#24423e;font-size:31px}.tagline{font-size:9px;letter-spacing:2.2px;color:var(--muted)}.top-actions{margin-left:auto;display:flex;align-items:center;gap:16px}.status{font-size:11px;color:#a6b7bd;display:flex;align-items:center;gap:7px}.status i,.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold)}.status.ready i{background:var(--mint)}.quiet{color:#aabcc2;background:none;padding:7px 3px;font-size:11px}.quiet:hover{color:var(--mint)}kbd{display:inline-grid;place-items:center;min-width:22px;height:23px;padding:0 5px;background:#1e2d39;color:#c3d0d7;border:1px solid #354550;border-bottom:2px solid #41545d;border-radius:4px;font:10px var(--font)}.workspace{max-width:1920px;margin:auto;padding:26px 36px 0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px}.chapter-row{display:flex;align-items:center;justify-content:space-between;margin:0 0 18px}.eyebrow{font-size:9px;letter-spacing:2px;font-weight:700;color:#90a5b2;margin:0 0 7px}.chapter-row h1{font-family:var(--display);font-size:25px;font-weight:500;margin:0}.run-label{font-size:9px;letter-spacing:1.5px;color:#9fb8bd}.run-label span{margin-left:8px;color:var(--mint)}.game-frame{aspect-ratio:16/9;position:relative;overflow:hidden;border:1px solid #35515a;border-radius:12px;background:#132c39;box-shadow:0 24px 80px #0003}#game{display:block;width:100%;height:100%;outline:none}.game-hud{position:absolute;top:18px;left:22px;right:22px;display:flex;align-items:center;gap:24px;pointer-events:none;font:12px var(--display);text-shadow:0 2px 6px #0008}#health{color:#ffcdad;font-size:17px;letter-spacing:3px}#shards{color:#ffe4a8}#timer{margin-left:auto;color:#ccdcdd}.hud-button{pointer-events:auto;background:#132a36aa;border:1px solid #aac8cc44;color:#e5efec;width:26px;height:26px;border-radius:5px}.world-caption{position:absolute;bottom:19px;left:22px;display:flex;align-items:center;gap:8px;font-size:10px;color:#d0e2e0;max-width:85%;pointer-events:none}.world-caption .dot{background:#80e3cd}.title-overlay{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;flex-direction:column;padding:8% 8%;background:linear-gradient(90deg,#10232bd9 0,#10232b85 43%,transparent 80%)}.mini-glyph{font-size:30px;color:var(--mint);margin-bottom:18px}.title-overlay h2{font:500 clamp(25px,3.6vw,58px)/1.05 var(--display);letter-spacing:-2px;margin:12px 0 16px}.title-overlay h2 em{font-style:normal;color:var(--mint)}.title-overlay p:not(.eyebrow){font-size:13px;line-height:1.7;color:#b6c9cb}.primary{background:var(--mint);color:#102923;font-weight:700;border:1px solid #c8ffee33;border-radius:6px;padding:14px 20px;display:inline-flex;align-items:center;justify-content:center;gap:20px;transition:background .15s,transform .15s}.primary:hover{background:#b6f7e8;transform:translateY(-1px)}.title-overlay .primary{margin-top:13px}.overlay-note{margin-top:15px;color:#9cb7b9;font-size:10px;letter-spacing:.4px}.control-bar{padding:14px 3px;display:flex;align-items:center;gap:17px;font-size:10px;color:#9bb0ba}.control-bar>span{display:flex;align-items:center;gap:5px}.weave{margin-left:auto;display:flex;gap:15px;background:#1e3936;color:var(--mint);border:1px solid #34584f;padding:8px 12px;border-radius:5px;font-size:11px}.quest-card{display:flex;align-items:center;gap:17px;border:1px solid var(--line);border-radius:9px;padding:20px;background:linear-gradient(110deg,#182d32,#15212b)}.quest-icon{font-size:29px;color:var(--gold);width:32px}.quest-card h2{font:500 17px var(--display);margin:0 0 7px}.quest-card p{font-size:11px;color:#a7bbc2;margin:0;line-height:1.5}.quest-card .primary{margin-left:auto;flex-shrink:0}.primary.small{font-size:11px;padding:12px 15px;gap:15px}.journey-strip{display:flex;align-items:center;gap:15px;margin:24px 0;color:#546a78;font-size:9px;letter-spacing:1px}.journey-strip b{font-weight:400;margin-right:7px}.journey-strip .active{color:#b5d2cf}.journey-line{width:42px;height:1px;background:#3b555e}.spacer{flex:1}.instruments{padding-top:4px}.camera-card,.powers-card{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#14202b}.panel-heading{padding:15px 16px;display:flex;align-items:center;justify-content:space-between}.panel-heading h2{font:500 13px var(--display);margin:0}.micro-badge{font-size:8px;letter-spacing:1px;border:1px solid #40535d;padding:4px 6px;border-radius:4px;color:#9bafb9}.micro-badge.live{border-color:#4f8d7e;color:var(--mint)}.camera-preview{height:180px;background:radial-gradient(circle,#243a45,#14202a);position:relative;margin:0 10px;overflow:hidden;border-radius:5px}.camera-preview video,.camera-preview canvas{position:absolute;width:100%;height:100%;object-fit:contain;transform:scaleX(-1)}#camera-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}.camera-symbol{font-size:36px;color:#91b7b6;margin-bottom:7px}#camera-placeholder strong{font-size:11px;font-weight:500}#camera-placeholder p{text-align:center;color:#7f9ba8;font-size:10px;line-height:1.5}.camera-caption{position:absolute;bottom:9px;left:10px;font-size:7px;letter-spacing:1.5px;color:#acc7cb;background:#10232b99;padding:3px 5px}.camera-corners{position:absolute;inset:12px;border:1px solid #65867c22;border-radius:8px;pointer-events:none}.camera-settings{padding:13px 15px}.camera-actions{display:flex;gap:10px;align-items:center}.outline{background:transparent;border:1px solid #46625e;color:#b7e7dc;padding:9px 13px;border-radius:5px;font-size:11px}.outline:hover{background:#294239}.camera-actions .outline{flex:1}select{width:100%;background:#0e1b25;color:#a9bdc6;border:1px solid var(--line);border-radius:5px;padding:8px;font-size:10px;margin-top:9px}.micro{font-size:9px;line-height:1.55;color:#8fa4af}.switch-row{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px;margin-top:13px;font-size:11px}.switch-row small{display:block;font-size:9px;color:#8fa4af;margin-top:5px}.switch-row input{accent-color:var(--mint);width:18px;height:18px}.tracking-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;color:#7e9aab;font-size:9px}.tracking-row button{font-size:9px}.powers-card{margin-top:15px}.powers-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px}.power-tile{background:#0e1b25;border:1px solid #2b3e4b;border-radius:6px;padding:11px 10px;text-align:left;color:#8298a5;min-height:80px;position:relative}.power-tile .glyph{font-size:21px;display:block;margin-bottom:5px}.power-tile strong{font-size:10px;font-weight:500;display:block}.power-tile small{font-size:8px;display:block;margin-top:4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100px}.power-tile.unlocked{background:#1a3337;border-color:#47746c;color:var(--mint)}.power-tile .power-state{position:absolute;right:9px;top:10px;font-size:9px}.power-note{text-align:center;margin:12px 0}.practice{border-bottom:1px solid var(--line);padding:17px 3px;color:#7f96a3}.practice summary{font-size:10px;cursor:pointer;display:flex;justify-content:space-between}.practice p{font-size:10px;line-height:1.6}.practice button{background:#26313d;border:1px solid #3a4655;color:#bbc8ce;font-size:9px;padding:7px;border-radius:4px;margin:3px}.event-panel{padding:20px 3px}.event-panel p{font-size:11px;line-height:1.6;color:#b0c2c8}.event-panel .eyebrow{font-size:8px}footer{margin:0 36px;padding:17px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:8px;letter-spacing:1.2px;color:#667d8c}.footer-dot{padding:0 10px;color:#4d665e}.boss-hud{position:absolute;top:65px;left:30%;right:12%;text-align:center;font:10px var(--display);letter-spacing:3px;color:#f5d3ce}.boss-hud>div{height:5px;background:#371c33;border:1px solid #774058;margin-top:10px}.boss-hud i{display:block;height:100%;background:linear-gradient(90deg,#ff927e,#ef7496);width:100%;transition:width .2s}.boss-hud small{display:block;letter-spacing:2px;margin-top:7px;font-size:8px}.center-overlay{position:absolute;inset:0;background:#0d1b26d9;display:grid;place-items:center;text-align:center;padding:30px;backdrop-filter:blur(5px)}.center-overlay h2{font:500 36px var(--display);color:#b9f3df}.center-overlay p{font-size:12px;color:#a2bac4;line-height:1.6}.center-overlay .primary{margin-top:18px}dialog{border:1px solid #3b5b62;background:#15242f;color:var(--ink);border-radius:15px;max-width:min(850px,95vw);width:850px;padding:28px;box-shadow:0 30px 120px #0008}dialog::backdrop{background:#060f19d4;backdrop-filter:blur(8px)}.dialog-heading{display:flex;justify-content:space-between;align-items:center}.dialog-heading h2{font:500 29px var(--display);margin:0}.close{background:#263944;color:#d2e9e5;border-radius:50%;width:30px;height:30px;font-size:22px}.muted{color:#9db3bc;font-size:12px;line-height:1.6}.scan-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:22px}.capture-frame{aspect-ratio:4/3;border:1px solid #3c5b62;border-radius:9px;background:#0d1c27;display:grid;place-items:center;overflow:hidden;margin-bottom:12px}.capture-frame img{width:100%;height:100%;object-fit:contain}.capture-frame>div{font-size:12px;text-align:center;color:#a0bdc5;line-height:1.9}.capture-frame small{font-size:10px;color:#6c8c99}.wide{width:100%;margin-top:8px}.ability-options{display:grid;grid-template-columns:1fr 1fr;gap:7px}.ability-option{border:1px solid #314b58;background:#10202c;border-radius:6px;color:#a4bcc4;padding:12px;text-align:left;font-size:11px}.ability-option strong{display:block;margin-bottom:6px}.ability-option small{font-size:9px;line-height:1.4;display:block}.ability-option.selected{border-color:var(--mint);background:#23413e;color:var(--mint)}#decision-result{font-size:10px;line-height:1.6;background:#0e1b25;padding:12px;border-radius:7px;margin-top:10px}#decision-result .result-line{display:flex;justify-content:space-between;gap:15px}.result-good{color:var(--mint)}.result-bad{color:#ffb99d}.setup{font-size:11px;color:#9ab5bf;border-top:1px solid var(--line);padding-top:15px;margin-top:20px}.setup p{font-size:11px;line-height:1.7}.setup summary{cursor:pointer}.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin:25px 0}.help-grid b{font-size:9px;letter-spacing:2px;color:var(--mint)}.help-grid h3{font:500 19px var(--display)}.help-grid p{font-size:12px;line-height:1.7;color:#a8bdc6}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(min-width:1650px){.workspace{grid-template-columns:minmax(0,1fr) 340px}.camera-preview{height:215px}.panel-heading h2{font-size:15px}.camera-settings{padding:17px}.powers-card{margin-top:20px}}@media(max-width:1100px){.topbar{margin:0 20px}.tagline{display:none}.workspace{padding:20px;grid-template-columns:minmax(0,1fr) 265px;gap:16px}.control-bar{gap:8px;flex-wrap:wrap}.quest-card{flex-wrap:wrap;padding:16px}.quest-card .primary{margin-left:49px}.title-overlay h2{letter-spacing:-1px}.title-overlay .mini-glyph{display:none}.camera-preview{height:160px}.top-actions{gap:10px}}@media(max-width:820px){.workspace{grid-template-columns:1fr}.instruments{display:grid;grid-template-columns:1fr 1fr;gap:14px}.camera-card{grid-row:span 3}.powers-card{margin:0}.camera-preview{height:200px}.title-overlay h2{font-size:34px}.topbar{height:70px}.brand{font-size:18px}.status{display:none}.quest-card .primary{margin-left:auto}.scan-layout{grid-template-columns:1fr}.game-hud{top:10px;left:12px;right:12px}.world-caption{bottom:10px;left:12px}.title-overlay{padding:5%}.title-overlay p:not(.eyebrow){font-size:11px}.title-overlay .primary{padding:10px 14px;margin-top:3px}.overlay-note{display:none}footer{margin:0 20px;font-size:7px}}@media(max-width:500px){.instruments{display:block}.powers-card{margin-top:15px}.title-overlay h2{font-size:25px;margin:6px 0}.title-overlay .eyebrow,.title-overlay p:not(.eyebrow){display:none}.chapter-row h1{font-size:20px}.run-label{font-size:7px}.control-bar{font-size:9px}.quest-icon{display:none}.quest-card .primary{margin-left:0}.help-grid{grid-template-columns:1fr}.journey-strip{gap:8px;font-size:8px}.top-actions #sound{display:none}}
+
+#object-guide{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:2px dashed #94ead6;border-radius:12px;pointer-events:none;box-shadow:0 0 0 100vmax #07142038;clip-path:inset(-200px)}#object-guide span{position:absolute;bottom:5px;left:5px;background:#10232ee8;color:#bdf7e4;padding:3px 5px;font-size:8px;letter-spacing:1px}#auto-status{min-height:32px;color:#bdf7e4}#auto-status[data-state="error"]{color:#ffb39a}
+
+.held-powers{padding:10px;border:1px solid #62b5a0;border-radius:6px;color:#c8ffe8;background:#1b3535;font-size:11px;line-height:1.6}.boss-hud{left:25%;right:25%}#object-guide{box-shadow:none}
+
+/* A quieter instrument panel lets the encounter own the screen. */
+body{background:radial-gradient(ellipse at 35% 0,#203344 0,transparent 60%),#080f18}
+.topbar{height:68px}.workspace{padding-top:22px}.chapter-row h1{letter-spacing:-.8px}.chapter-row .eyebrow{color:#73c8c1}
+.game-frame{border-color:#355365;box-shadow:0 0 0 5px #152c381f,0 30px 90px #0007}
+.camera-card{background:linear-gradient(145deg,#172733,#101c28);border-color:#2d4452}.panel-heading h2{font-size:10px;letter-spacing:1.6px;color:#b0c8d0}
+.loadout{margin:0 15px 16px}.loadout .eyebrow{font-size:7px;letter-spacing:1.2px}.loadout h2{font:500 24px/1.1 var(--display);letter-spacing:-.7px;margin:10px 0;color:#dce9ec}.loadout p{font-size:11px;line-height:1.6;min-height:35px;color:#92aab8;margin-bottom:14px}
+.loadout-slots{display:flex;gap:8px}.loadout-slots span{padding:8px 12px;border:1px solid #354857;color:#6e8493;border-radius:5px;font-size:9px;letter-spacing:1.3px;flex:1;text-align:center;transition:all .15s}
+#shield-indicator.equipped{background:#173c3b;color:#a7ffdf;border-color:#58a99b;box-shadow:0 0 20px #68e3b517}#strike-indicator.equipped{background:#3a2a30;color:#ffcf98;border-color:#ac7d55;box-shadow:0 0 20px #ffd18c17}
+.loadout[data-mode="shield"] h2,.loadout[data-mode="both"] h2{color:#b4ffe8}.loadout[data-mode="strike"] h2{color:#ffd2ac}
+.camera-preview{height:auto!important;aspect-ratio:16/10;margin:0 14px;background:#081420;border:1px solid #35505b}.camera-caption{max-width:90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:6px}
+.camera-settings{padding:12px 15px}.camera-actions .outline{padding:9px}.held-powers{background:transparent;border:0;border-left:2px solid #6bac9c;padding:2px 8px;font-size:9px;margin:14px 0 6px}.camera-settings .micro{line-height:1.5;font-size:9px;margin:6px 0}#auto-status{min-height:26px;color:#9db5c3}
+.motion-feedback{display:flex;align-items:center;gap:12px;font-size:7px;letter-spacing:1.4px;color:#b8c8cf;margin-top:16px}.motion-feedback>div{height:4px;flex:1;background:#30414d;border-radius:3px;overflow:hidden}.motion-feedback i{display:block;height:100%;width:0;background:#ffd099;transition:width .08s}
+.privacy-note{font-size:8px;line-height:1.55;color:#7f98a6;margin:13px 0}.camera-options{border-top:1px solid #2b3f4e;padding-top:10px;margin-top:12px}.camera-options summary{font-size:10px;color:#adc2cb;cursor:pointer;padding:4px 0}.camera-options .switch-row{font-size:10px}.camera-options .micro{font-size:8px}
+.raid-mode .world-caption{bottom:15px;opacity:.75;font-size:9px}.raid-cue{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);border:1px solid #6e82a155;background:#0b1529dc;backdrop-filter:blur(8px);border-radius:30px;padding:11px 22px;font:600 10px var(--display);letter-spacing:1.5px;text-align:center;white-space:nowrap;pointer-events:none;color:#c5d4e6}.raid-cue[data-kind="shield"]{color:#adffe0;border-color:#68e2b66b;background:#0d302ed9}.raid-cue[data-kind="strike"]{color:#ffdbb0;border-color:#ffbc7166;background:#332332de}
+.raid-mode .boss-hud{top:36px;left:34%;right:34%;font-size:9px;letter-spacing:3px;color:#d4bbef}.raid-mode .boss-hud>div{height:4px;background:#291b38;border:0;margin-top:9px;border-radius:3px;overflow:hidden}.raid-mode .boss-hud i{background:linear-gradient(90deg,#b9a2ff,#fa89b0);box-shadow:0 0 14px #dd82ff}.raid-mode .boss-hud small{font-size:7px;margin-top:9px;letter-spacing:1.4px}
+.raid-mode .quest-card{display:none}.raid-mode .journey-strip{margin:9px 0 17px}.raid-mode .powers-card{display:none}.raid-mode .event-panel{padding-top:13px}.raid-mode #shards{display:none}
+.showcase .topbar{height:50px}.showcase .tagline,.showcase #help,.showcase #api-status,.showcase footer,.showcase .journey-strip,.showcase .event-panel,.showcase .quest-card,.showcase .powers-card{display:none}.showcase .workspace{padding:16px 22px 0;max-width:none;grid-template-columns:minmax(0,1fr) 270px;gap:18px}.showcase .chapter-row{margin-bottom:13px}.showcase .chapter-row h1{font-size:23px}.showcase .control-bar{font-size:9px}.showcase .topbar{margin:0 22px}
+@media(max-width:820px){.showcase .workspace{grid-template-columns:1fr}.raid-cue{font-size:7px;padding:7px 10px;bottom:30px}.raid-mode .world-caption{font-size:7px;bottom:10px}.loadout h2{font-size:22px}.raid-mode .boss-hud{top:40px;left:28%;right:28%}.showcase .instruments{display:grid}.top-actions{gap:9px}.chapter-row h1{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.loadout-slots span,.motion-feedback i{transition:none}}
+</style></head>
+<body>
+<header class="topbar"><a class="brand" href="#" aria-label="Riftmender home"><span class="brand-mark">ϟ</span><span>RIFT<span class="brand-light">MENDER</span></span></a><span class="tagline">YOUR WORLD IS THE INVENTORY</span><div class="top-actions"><span id="api-status" class="status"><i></i>Checking Gemini</span><button id="sound" class="quiet" aria-pressed="false">Sound off</button><button id="showcase" class="quiet" aria-pressed="false">Showcase</button><button id="boss-demo" class="quiet">Boss demo</button><button id="help" class="quiet">How to play <kbd>?</kbd></button></div></header>
+<main class="workspace">
+<section class="play-column" aria-label="Game">
+<div class="chapter-row"><div><span class="eyebrow" id="chapter-number">CHAPTER 01 / 02</span><h1 id="chapter-title">The Broken Reach</h1></div><div class="run-label" id="run-label">LOCAL ADVENTURE <span>✦</span></div></div>
+<div class="game-frame" id="game-frame">
+<canvas id="game" width="1280" height="720" tabindex="0" aria-label="Riftmender game. Arrow keys or A and D to move, Space to jump, E to weave, J to attack, K to guard."></canvas>
+<div class="game-hud"><span id="health" aria-label="Health">♥ ♥ ♥ ♥ ♥</span><span id="shards">✦ 0 / 5</span><span id="timer">00:00</span><button id="pause" class="hud-button" aria-label="Pause game">Ⅱ</button></div>
+<div id="boss-hud" class="boss-hud" hidden><span>THE RIFT WARDEN</span><div><i id="boss-health"></i></div><small id="boss-state">AWAKENING</small></div>
+<div id="raid-cue" class="raid-cue" hidden></div><div class="world-caption"><span class="dot"></span><span id="world-caption">A world in pieces. A little help from yours.</span></div>
+<div id="title-overlay" class="title-overlay"><div class="mini-glyph">✧</div><p class="eyebrow">A CAMERA-POWERED ADVENTURE</p><h2>Small hero.<br><em>Infinite possibilities.</em></h2><p>Borrow the shape of a real object.<br>Build a way forward. Face what waits beyond.</p><button id="start" class="primary">Enter the rift <span>↗</span></button><span class="overlay-note">One journey. Two worlds. Your hands.</span></div>
+<div id="pause-overlay" class="center-overlay" hidden><div><p class="eyebrow">TAKE A BREATH</p><h2>The world can wait.</h2><button id="resume" class="primary">Continue journey →</button></div></div>
+<div id="end-overlay" class="center-overlay" hidden><div><p class="eyebrow" id="end-kicker">RIFT MENDED</p><h2 id="end-title">You brought a world back.</h2><p id="end-stats"></p><p id="end-source" class="muted"></p><button id="retry" class="primary">Journey again ↗</button></div></div>
+</div>
+<div class="control-bar"><span id="traverse-controls"><span><kbd>←</kbd><kbd>→</kbd> Move</span><span><kbd>Space</kbd> Jump</span><span><kbd>E</kbd> Weave</span><span><kbd>J</kbd> Strike</span><span><kbd>K</kbd> Guard</span></span><span id="boss-controls" hidden>Show book: Shield &nbsp; Swipe phone / pen: Strike &nbsp; Pinch / Space: Dodge &nbsp; A/D: Lean</span><button id="weave" class="weave">Weave bridge <span>═</span></button></div>
+<div class="quest-card"><span class="quest-icon">✦</span><div><span class="eyebrow">YOUR NEXT MOVE</span><h2 id="objective-title">Borrow a bridge from your world</h2><p id="objective-detail">Approach a gap and show a phone, notebook or ruler. Auto weave builds the bridge.</p></div><button id="scan-open" class="primary small">Manual scanner <span>＋</span></button></div>
+<div class="journey-strip"><span class="active" id="step-reach"><b>01</b> THE BROKEN REACH</span><span class="journey-line"></span><span id="step-warden"><b>02</b> THE RIFT WARDEN</span><span class="spacer"></span><button id="export" class="quiet">Export run log ↓</button></div>
+</section>
+<aside class="instruments" aria-label="Camera and borrowed powers">
+<section class="camera-card">
+<div class="panel-heading"><h2>REAL WORLD / LOADOUT</h2><span id="camera-badge" class="micro-badge">OFFLINE</span></div>
+<div id="loadout" class="loadout" data-mode="waiting"><span class="eyebrow">BORROW SOMETHING EXTRAORDINARY</span><h2 id="loadout-title">Your world. Your weapon.</h2><p id="loadout-hint">Show a book to defend, or a phone or pen to strike.</p><div class="loadout-slots"><span id="shield-indicator">&#9671; SHIELD</span><span id="strike-indicator">&#8605; STRIKE</span></div></div>
+<div class="camera-preview"><video id="camera" autoplay muted playsinline></video><canvas id="hand-overlay"></canvas><div id="object-guide" hidden><span>KEEP HELD ITEMS INSIDE</span></div><div id="camera-placeholder"><div class="camera-symbol">&#9678;</div><strong>A window to your world</strong><p>Connect your camera to borrow<br>powers from everyday objects.</p></div><div class="camera-corners"></div><span class="camera-caption" id="camera-caption">NO CAMERA CONNECTED</span></div>
+<div class="camera-settings">
+<div class="camera-actions"><button id="camera-start" class="outline">Connect camera</button><button id="camera-stop" class="quiet" disabled>Stop</button></div>
+<label class="switch-row"><span>Live items <small>Recognize &amp; equip automatically</small></span><input type="checkbox" id="auto-weave" checked></label>
+<p id="held-powers" class="held-powers" role="status">IN HAND: show an object</p><p id="auto-status" class="micro" role="status" aria-live="polite">Approach a glowing gap with your camera connected.</p>
+<div class="motion-feedback"><span>SWIPE MOTION</span><div><i id="motion-meter"></i></div></div><p id="motion-status" class="micro">Connect camera for physical controls.</p><p id="location-status" class="micro">Object outlines appear after recognition.</p>
+<p class="privacy-note">Live items sends cropped snapshots to Google for recognition and object outlines. Movement tracking stays on this device.</p>
+<details class="camera-options"><summary>Camera &amp; tracking settings</summary>
+<label class="sr-only" for="camera-select">Camera device</label><select id="camera-select"><option value="">Default camera</option></select><p id="camera-detail" class="micro">Select your external camera here.</p>
+<label class="switch-row"><span>Hand controls <small>Steer, pinch and lean</small></span><input type="checkbox" id="hand-toggle" disabled></label>
+<label class="switch-row"><span>Prop motion <small>Swipe even with fingers hidden</small></span><input type="checkbox" id="prop-motion" checked></label>
+<label class="switch-row"><span>Object outlines <small>Gemini positions + local tracking</small></span><input type="checkbox" id="prop-layer" checked></label>
+<div class="tracking-row"><span id="tracking-status" role="status">Keyboard controls ready</span><button id="calibrate" class="quiet" disabled>Center hand</button></div>
+<p class="micro">Outlined camera regions are composited in front of the boss. This is approximate object localization, not depth sensing. Keep the camera steady.</p>
+</details></div></section>
+<section class="powers-card"><div class="panel-heading"><h2>Borrowed powers</h2><span id="power-count" class="micro">0 / 4</span></div><div id="powers" class="powers-grid"></div><p class="micro power-note">The ordinary becomes extraordinary.</p></section>
+<details class="practice"><summary>Practice without Gemini <span>↗</span></summary><p>These manually selected items test gameplay. They are <strong>not AI recognition</strong>. Your run will be labelled Practice.</p><div id="practice-items"></div></details>
+<div class="event-panel"><span class="eyebrow">RIFT ECHOES</span><p id="latest-event" aria-live="polite">Something small is about to matter.</p></div>
+</aside>
+</main>
+<footer><span>RIFTMENDER <span class="footer-dot">/</span> BORROWED POWERS, REAL POSSIBILITIES</span><span id="footer-status">LOCAL DEMO · 0.4</span></footer>
+<dialog id="scan-dialog"><div class="dialog-heading"><div><p class="eyebrow">BORROW FROM YOUR WORLD</p><h2>What will you bring?</h2></div><button id="scan-close" class="close" aria-label="Close scanner">×</button></div><p class="muted">Hold one object clearly in view. Choose what you want to borrow.</p><div class="scan-layout"><div><div class="capture-frame"><img id="capture-image" alt="Preview of the object photo to evaluate" hidden><div id="capture-empty">Your captured object appears here.<br><small>Nothing is sent until you choose Evaluate.</small></div></div><button id="capture" class="outline wide">Capture camera frame ⌑</button><p class="micro">Only this still image is sent to Google when you evaluate it.</p></div><div><div id="ability-options" class="ability-options"></div><button id="evaluate" class="primary wide" disabled>Evaluate with Gemini <span>✧</span></button><p id="scan-status" class="micro" aria-live="polite">A camera frame and a configured Gemini key are needed.</p><div id="decision-result" hidden></div><button id="apply-power" class="primary wide" hidden>Borrow this power →</button></div></div><details class="setup"><summary>About this standalone edition</summary><p>This file runs practice gameplay and camera controls without a server or Gemini key. To use real object recognition later, launch the full project with START-RIFTMENDER.cmd and configure the key there.</p></details></dialog>
+<dialog id="help-dialog"><div class="dialog-heading"><div><p class="eyebrow">A FIELD GUIDE</p><h2>Your hands. Your world.</h2></div><button id="help-close" class="close" aria-label="Close guide">×</button></div><div class="help-grid"><article><b>01 / MOVE</b><h3>Guide the little light.</h3><p>Use A / D or arrow keys, and Space to jump. With hand controls on, move left or right of your calibrated center. Pinch thumb and index finger to jump.</p></article><article><b>02 / BORROW</b><h3>Make the ordinary useful.</h3><p>With Auto weave on, hold an object inside the camera guide near a gap. Gemini checks snapshots and a suitable object builds the bridge immediately. Books equip shields, shiny items reflect, and phones or pens equip strikes automatically.</p></article><article><b>03 / WEAVE</b><h3>Close the distance.</h3><p>Walk to a glowing gap anchor and hold a phone, notebook, ruler or cardboard in view. Your hero waits at the edge while Auto weave checks. When the bridge appears, keep moving. E and Weave bridge remain available for manually borrowed powers.</p></article><article><b>04 / FACE THE WARDEN</b><h3>Defense becomes attack.</h3><p>The Warden appears in first person over your camera. Hold a recognized book or broad object to bounce attacks back. Sweep a recognized phone or pen across the camera to strike. Local prop motion works even when fingers are hidden. Keep the camera stationary. A book and pen can be recognized together. Pinch or Space dodges. Show a new item to switch powers automatically.</p></article></div><p class="micro">Keep held items inside the camera guide. Fingers need to be visible only for hand steering and pinching. Calibration sets your neutral point. Losing tracking stops gesture input. Esc pauses or closes a dialog. Sound is optional. Practice items never pretend to be live AI results.</p></dialog>
+<script type="module">function createRaid(){return {lean:0,bolts:[],slash:0,parry:0,impact:0,lastDamage:0,combo:0,slashDirection:1,ready:false,awaitingItem:false,strikeReady:false,dodge:0,dodgeCooldown:0,lastAttack:false,lastDodge:false,shieldPoint:{x:.5,y:.65},shieldActive:false};}
+function stepRaid(g,dt,input,{event,hurt,damageBoss}){
+  const r=g.raid,b=g.boss,p=g.player;
+  p.invuln=Math.max(0,p.invuln-dt);p.attackCd=Math.max(0,p.attackCd-dt);
+  r.slash=Math.max(0,r.slash-dt);r.parry=Math.max(0,r.parry-dt);r.dodge=Math.max(0,r.dodge-dt);r.dodgeCooldown=Math.max(0,r.dodgeCooldown-dt);
+  r.impact=Math.max(0,r.impact-dt);
+  r.lean+=(Math.max(-1,Math.min(1,input.move||0))-r.lean)*Math.min(1,dt*9);
+  if(input.pointer)r.shieldPoint={x:Math.max(.02,Math.min(.98,input.pointer.x)),y:Math.max(.02,Math.min(.98,input.pointer.y))};
+  const powers=input.liveMode?(input.livePowers||{}):g.powers;
+  r.strikeReady=!!powers.strike;
+  if(!r.ready&&(!input.liveMode||powers.shield||powers.reflect||powers.strike)){
+    r.ready=true;if(input.liveMode)b.timer=Math.min(b.timer,2);
+  }
+  r.awaitingItem=b.state==='intro'&&input.liveMode&&!r.ready;
+  r.shieldActive=!!(powers.shield||powers.reflect)&&(input.liveMode||!!input.guard);
+  p.guard=r.shieldActive;
+  if(input.jump&&!r.lastDodge&&r.dodgeCooldown<=0){r.dodge=.55;r.dodgeCooldown=1.2;event(g,'DODGE — slip past the incoming blast.');}
+  r.lastDodge=!!input.jump;
+  if(input.attack&&!r.lastAttack&&p.attackCd<=0){
+    if(powers.strike||!input.liveMode){
+      p.attackCd=.6;r.slash=.38;r.slashDirection=input.swipeDirection||g.player.face||1;
+      r.lastDamage=b.state==='exposed'?(powers.strike?24:12):5;r.impact=.55;r.combo++;
+      damageBoss(g,r.lastDamage);
+      event(g,powers.strike?'RIFT STRIKE — your held prop cuts through the rift.':'Practice strike.','power');
+    }else event(g,'Show a phone or pen until STRIKE lights up, then swipe.');
+  }
+  r.lastAttack=!!input.attack;
+  if(g.phase!=='boss')return;
+  if(!r.awaitingItem)b.timer-=dt;
+  if(b.state==='intro'&&b.timer<=0){b.state='windup';b.timer=2.4;b.attack='orbs';event(g,'The Warden is in front of you. Raise a book to return its attack.','boss');}
+  else if(b.state==='windup'&&b.timer<=0){b.state='attack';b.timer=b.attack==='beam'?1.6:2.2;b.fired=false;b.nextShot=0;}
+  else if(b.state==='attack'){
+    b.nextShot=(b.nextShot||0)-dt;
+    if(!b.fired||(b.attack==='orbs'&&b.nextShot<=0)){
+      b.fired=true;b.nextShot=.8;
+      r.bolts.push({depth:7,lane:r.lean,kind:b.attack,returning:false});
+    }
+    if(b.timer<=0){b.state='exposed';b.timer=4;event(g,'CORE EXPOSED — swipe your phone or pen.','boss');}
+  }else if(b.state==='exposed'&&b.timer<=0){b.cycle++;b.state='windup';b.attack=b.cycle%2?'beam':'orbs';b.timer=b.hp<75?1.7:2.4;}
+  for(const bolt of r.bolts){
+    bolt.depth+=(bolt.returning?8:-(b.hp<75?5:3.7))*dt;
+    if(bolt.returning&&bolt.depth>=7){r.lastDamage=bolt.kind==='beam'?22:16;r.impact=.6;r.combo++;damageBoss(g,r.lastDamage);bolt.done=true;}
+    else if(!bolt.returning&&bolt.depth<=.65){
+      if(r.shieldActive){
+        bolt.returning=true;bolt.depth=.65;bolt.shieldPoint={...r.shieldPoint};r.parry=.45;g.stats.blocks++;g.stats.reflects++;
+        b.state='exposed';b.timer=4;event(g,'BOUNCED BACK — your held shield returns the blast.','power');
+      }else {if(r.dodge<=0&&Math.abs(r.lean-bolt.lane)<.6){r.combo=0;hurt(g);}else event(g,'DODGED - strike back.');bolt.done=true;}
+    }
+  }
+  r.bolts=r.bolts.filter(bolt=>!bolt.done);
+  if(g.phase==='won')r.bolts=[];
+}
+
+const VIEW={w:1280,h:720};
+const POWER_INFO={
+  bridge:{name:'Worldweave',short:'Bridge',colour:'#77e7d5',symbol:'═',hint:'Flat or elongated • ruler, notebook, cardboard'},
+  shield:{name:'Aegis',short:'Shield',colour:'#89baff',symbol:'◇',hint:'Broad surface • book, lid, cardboard'},
+  reflect:{name:'Mirrorwake',short:'Reflect',colour:'#e5bcff',symbol:'✧',hint:'Visible shine • spoon, foil, mirror'},
+  strike:{name:'Riftblade',short:'Strike',colour:'#ffbb83',symbol:'↗',hint:'Elongated prop • pen, spoon, cardboard wand'}
+};
+const GAPS=[{x:570,w:380,y:560},{x:1530,w:280,y:560}];
+function createGame(){return {phase:'title',time:0,clock:0,player:{x:155,y:500,w:30,h:50,vx:0,vy:0,grounded:false,face:1,hp:5,invuln:0,attackCd:0,guard:false},cameraX:0,checkpoint:155,powers:{},bridges:[],shards:[360,1110,1330,1960,2370].map((x,i)=>({x,y:i===2?388:510,taken:false})),particles:[],shots:[],events:[],flash:0,shake:0,practice:false,boss:null,raid:null,liveItem:null,stats:{falls:0,hits:0,blocks:0,reflects:0,scans:0},lastJump:false,lastAttack:false,lastBuild:false};}
+function event(g,text,kind='info'){g.events.push({text,kind,time:g.time});if(g.events.length>40)g.events.shift();}
+function startGame(g){g.phase='traverse';event(g,'The Broken Reach · find a way across.');}
+function unlock(g,ability,item){if(!POWER_INFO[ability])return;g.powers[ability]={label:item.label||'Borrowed object',source:item.source||'practice',flavour:item.flavour||''};g.practice ||= item.source!=='gemini-decision';g.stats.scans++;event(g,`${POWER_INFO[ability].name} borrowed from ${item.label}.`,'power');burst(g,g.player.x,g.player.y,POWER_INFO[ability].colour,28);}
+function platforms(g){if(g.phase==='boss'||g.phase==='won')return [{x:0,w:1280,y:560}];return [{x:-100,w:670,y:560},{x:950,w:580,y:560},{x:1810,w:1100,y:560},{x:1230,w:200,y:430},...g.bridges.map(i=>({...GAPS[i],bridge:true}))];}
+function nearGap(g){return GAPS.findIndex((p,i)=>!g.bridges.includes(i)&&g.player.x>=p.x-190&&g.player.x<=p.x+p.w+80);}
+function buildBridge(g){if(g.phase!=='traverse')return false;const i=nearGap(g);if(i<0){event(g,'Move to a glowing bridge anchor.');return false;}if(!g.powers.bridge){event(g,'Borrow Worldweave from a flat or elongated real object.','scan');return false;}g.bridges.push(i);burst(g,GAPS[i].x+GAPS[i].w/2,550,'#77e7d5',70);event(g,'A piece of your world closes the gap.','power');return true;}
+function beginBoss(g){g.liveItem=null;g.raid=createRaid();g.phase='boss';g.cameraX=0;Object.assign(g.player,{x:185,y:500,vx:0,vy:0,hp:5,invuln:1});g.shots=[];g.boss={x:1000,y:320,hp:150,maxHp:150,state:'intro',timer:7,cycle:0,attack:'beam',fired:false};event(g,'The Rift Warden · defend, then strike its exposed core.','boss');}
+function burst(g,x,y,colour,count=16){for(let i=0;i<count;i++){const a=i/count*Math.PI*2;const speed=30+(i*47%170);g.particles.push({x,y,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed-35,life:0.6+(i%6)*0.13,max:1.3,colour,size:2+i%4});}if(g.particles.length>500)g.particles.splice(0,g.particles.length-500);}
+function hurt(g){const p=g.player;if(p.invuln>0)return;p.hp--;p.invuln=1.2;g.stats.hits++;g.flash=0.25;g.shake=0.35;burst(g,p.x,p.y,'#ff7d8e',18);if(p.hp<=0){g.phase='dead';event(g,'The light remains. Try the encounter again.');}}
+function damageBoss(g,amount){const b=g.boss;if(!b||g.phase!=='boss')return;b.hp=Math.max(0,b.hp-amount);burst(g,b.x,b.y,'#ffd1a3',24);g.shake=0.15;if(b.hp===0){g.phase='won';g.shots=[];event(g,'RIFT MENDED · your world made the difference.','win');burst(g,b.x,b.y,'#77e7d5',100);}}
+function fire(g){const p=g.player;if(p.attackCd>0)return;p.attackCd=0.5;g.shots.push({x:p.x+20*p.face,y:p.y+12,vx:p.face*900,vy:0,life:2,owner:'player',r:10,damage:g.powers.strike?20:10});burst(g,p.x+30*p.face,p.y+15,'#ffbb83',6);}
+function retry(g){if(g.boss){beginBoss(g);return;}g.phase='traverse';Object.assign(g.player,{x:g.checkpoint,y:450,hp:5,vx:0,vy:0,invuln:1});}
+function step(g,dt,input={}){
+  dt=Math.max(0,Math.min(dt,0.033));g.clock+=dt;
+  for(const p of g.particles){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=90*dt;}g.particles=g.particles.filter(p=>p.life>0);
+  g.flash=Math.max(0,g.flash-dt);g.shake=Math.max(0,g.shake-dt);
+  if(g.phase==='title'||g.phase==='dead'||g.phase==='won'||input.paused)return;
+  g.time+=dt;if(g.phase==='boss'&&g.raid){stepRaid(g,dt,input,{event,hurt,damageBoss});return;}const p=g.player;p.invuln=Math.max(0,p.invuln-dt);p.attackCd=Math.max(0,p.attackCd-dt);
+  const axis=Math.max(-1,Math.min(1,Number(input.move)||0));p.vx+=(axis*300-p.vx)*Math.min(1,dt*14);if(Math.abs(axis)>.1)p.face=axis>0?1:-1;
+  p.guard=!!input.guard && !!(g.powers.shield||g.powers.reflect);
+  if(input.jump&&!g.lastJump&&p.grounded){p.vy=-760;p.grounded=false;burst(g,p.x,p.y+45,'#a7d6cf',8);}
+  if(input.attack&&!g.lastAttack)fire(g);
+  if(input.build&&!g.lastBuild)buildBridge(g);
+  g.lastJump=!!input.jump;g.lastAttack=!!input.attack;g.lastBuild=!!input.build;
+  const oldBottom=p.y+p.h;p.vy+=1850*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.grounded=false;
+  // Wait at an unfinished left anchor while live recognition is enabled.
+  if(input.autoWeaveAssist&&g.phase==='traverse'){
+    for(const [i,gap] of GAPS.entries()){
+      const edge=gap.x-p.w/2-2;
+      if(!g.bridges.includes(i)&&p.x>=edge&&p.x-p.vx*dt<=edge+5&&oldBottom<=gap.y+5&&p.vx>0){p.x=edge;p.vx=0;}
+    }
+  }
+  for(const platform of platforms(g)){if(p.vy>=0&&oldBottom<=platform.y+5&&p.y+p.h>=platform.y&&p.x+p.w/2>platform.x&&p.x-p.w/2<platform.x+platform.w){p.y=platform.y-p.h;p.vy=0;p.grounded=true;}}
+  p.x=Math.max(35,Math.min(g.phase==='boss'?1200:2800,p.x));
+  if(g.phase==='traverse'){
+    if(p.x>1000&&p.x<1500&&p.grounded)g.checkpoint=1030;if(p.x>1850&&p.grounded)g.checkpoint=1870;
+    for(const s of g.shards){if(!s.taken&&Math.hypot(p.x-s.x,p.y+20-s.y)<50){s.taken=true;burst(g,s.x,s.y,'#ffe3a0',20);event(g,`Light recovered · ${g.shards.filter(s=>s.taken).length}/5`,'shard');}}
+    if(p.y>800){g.stats.falls++;p.x=g.checkpoint;p.y=400;p.vx=p.vy=0;event(g,'The rift returns you to your last anchor.');}
+    g.cameraX+=(Math.max(0,Math.min(1600,p.x-360))-g.cameraX)*Math.min(1,dt*5);
+    if(p.x>2660)beginBoss(g);
+  }
+  if(g.phase==='boss')updateBoss(g,dt);
+  for(const shot of g.shots){shot.life-=dt;shot.x+=shot.vx*dt;shot.y+=(shot.vy||0)*dt;
+    if(shot.owner==='player'&&g.boss&&g.phase==='boss'&&Math.abs(shot.x-g.boss.x)<105&&shot.y>190&&shot.y<560){damageBoss(g,g.boss.state==='exposed'?shot.damage:2);shot.life=0;}
+    if(shot.owner==='enemy'&&Math.abs(shot.x-p.x)<shot.r+25&&Math.abs(shot.y-(p.y+25))<shot.r+25){
+      if(p.guard){g.stats.blocks++;if(g.powers.reflect){shot.owner='player';shot.vx=900;shot.vy=(g.boss.y-shot.y)*1.8;shot.damage=30;shot.life=2;g.stats.reflects++;g.boss.state='exposed';g.boss.timer=4;event(g,'REFLECTED · the core is exposed.','power');}else{shot.life=0;burst(g,p.x,p.y,'#89baff',12);}}else{shot.life=0;hurt(g);}
+    }
+  }g.shots=g.shots.filter(s=>s.life>0&&s.x>-100&&s.x<3100);
+}
+function updateBoss(g,dt){const b=g.boss,p=g.player;b.timer-=dt;const enraged=b.hp<75;
+  if(b.state==='intro'&&b.timer<=0){b.state='windup';b.timer=2.2;b.attack='orbs';event(g,'ORB VOLLEY · jump, or hold a borrowed shield.','boss');}
+  else if(b.state==='windup'&&b.timer<=0){b.state='attack';b.timer=b.attack==='beam'?1.5:2.4;b.fired=false;b.nextShot=0;}
+  else if(b.state==='attack'){
+    if(b.attack==='beam'&&!b.fired){b.fired=true;if(p.y+p.h>435){if(p.guard){g.stats.blocks++;burst(g,p.x,p.y,'#a9beff',25);if(g.powers.reflect){damageBoss(g,18);g.stats.reflects++;event(g,'MIRRORWAKE · beam returned.','power');}}else hurt(g);}}
+    if(b.attack==='orbs'){b.nextShot-=dt;if(b.nextShot<=0){b.nextShot=enraged?.6:.8;g.shots.push({x:b.x-100,y:510,vx:enraged?-520:-390,vy:0,r:17,owner:'enemy',life:4});}}
+    if(b.timer<=0&&g.phase==='boss'){b.state='exposed';b.timer=enraged?3.3:4.2;event(g,'CORE EXPOSED · swipe or press J to counterattack.','boss');}
+  }else if(b.state==='exposed'&&b.timer<=0){b.cycle++;b.state='windup';b.attack=b.cycle%2?'beam':'orbs';b.timer=enraged?1.65:2.2;event(g,b.attack==='beam'?'RIFT BEAM · jump high or guard.':'ORB VOLLEY · prepare your defense.','boss');}
+}
+function objective(g){if(g.phase==='boss'&&g.raid)return ['The Warden is in your world','Show a book to shield and return attacks. Show a phone or pen, then swipe to strike. Pinch or Space to dodge.'];if(g.phase==='boss'){const b=g.boss;if(b.state==='exposed')return ['The core is exposed','Swipe or press J. Your borrowed Riftblade deals double damage.'];return [b.attack==='beam'?'Survive the rift beam':'Face the Rift Warden','Jump to dodge. Hold an open palm / K to use a borrowed shield.'];}if(g.phase==='won')return ['You mended the rift','The smallest things can change a world.'];if(!g.powers.bridge)return ['Borrow a bridge from your world','Scan a ruler, notebook or cardboard. Choose Worldweave.'];if(g.bridges.length<2)return ['Stitch the islands together','Approach a glowing anchor and press E or use Weave bridge.'];return ['Find the Warden’s gate','Follow the islands to the right. Borrow shield and strike powers before the fight.'];}
+
+// A granted permission alone is not proof that the camera delivers video.
+function waitForCameraFrames(video, track, {isCurrent=()=>true, timeoutMs=8000, minimumFrames=3}={}) {
+  return new Promise((resolve,reject)=>{
+    const started=performance.now();let count=0,last=-1,callback=null,watch=null,done=false;
+    const finish=(error)=>{
+      if(done)return;done=true;clearInterval(watch);
+      if(callback!==null)video.cancelVideoFrameCallback?.(callback);
+      if(error)return reject(error);
+      resolve({verifiedAt:new Date().toISOString(),label:track.label||'Camera',width:video.videoWidth,height:video.videoHeight,observedFrames:count,observationMs:Math.round(performance.now()-started)});
+    };
+    const sample=time=>{
+      if(done)return;
+      if(!isCurrent()||track.readyState==='ended')return finish(new Error('Camera connection changed before video could be verified.'));
+      if(video.readyState>=2&&video.videoWidth>0&&video.videoHeight>0&&Number.isFinite(time)&&time!==last){last=time;count++;}
+      if(count>=minimumFrames)finish();
+    };
+    const frame=(_now,metadata)=>{sample(metadata.mediaTime);if(!done)callback=video.requestVideoFrameCallback(frame);};
+    if(video.requestVideoFrameCallback)callback=video.requestVideoFrameCallback(frame);
+    watch=setInterval(()=>{
+      if(!isCurrent()||track.readyState==='ended')return finish(new Error('Camera connection changed before video could be verified.'));
+      if(!video.requestVideoFrameCallback)sample(video.currentTime);
+      if(!done&&performance.now()-started>=timeoutMs)finish(new Error('Camera opened but no advancing video frames were verified. Check the camera, close other camera apps, and reconnect.'));
+    },50);
+  });
+}
+
+// Share startup across rapid off/on toggles; failed loads remain retryable.
+function createHandLoader(create) {
+  let pending=null, current=null;
+  return {
+    load(cpuOnly=false) {
+      if(pending)return pending;
+      if(current&&(!cpuOnly||current.delegate==='CPU'))return Promise.resolve(current);
+      if(current){try{current.model.close();}catch{}current=null;}
+      pending=(async()=>{
+        let model,delegate=cpuOnly?'CPU':'GPU';
+        try{model=await create(delegate);}catch(error){
+          if(cpuOnly)throw error;
+          delegate='CPU';model=await create(delegate);
+        }
+        current={model,delegate};return current;
+      })().finally(()=>{pending=null;});
+      return pending;
+    }
+  };
+}
+
+// Sample only at an unbuilt gap. Never overlap requests or apply stale results.
+function createAutoWeaver({context,request,result,status,accept=answer=>answer.accepted===true&&answer.source==='gemini-decision'&&answer.ability==='bridge',feedback=()=>['ready','Bridge woven. Keep moving!'],clock=()=>performance.now()}) {
+  let busy=false,next=0,generation=0,controller=null,failures=0;
+  function cancel(){if(controller){generation++;controller.abort();controller=null;}}
+  async function tick(){
+    const start=context();
+    if(!start){cancel();return;}
+    if(busy||clock()<next)return;
+    busy=true;const id=++generation,started=clock();
+    const abort=new AbortController();controller=abort;
+    const same=()=>{const current=context();return id===generation&&current&&current.game===start.game&&current.gap===start.gap&&current.camera===start.camera;};
+    const timeout=setTimeout(()=>abort.abort(),8000);
+    status('checking','Hold your object steady — checking its shape…');
+    try{
+      const answer=await request(abort.signal);
+      if(!same()||clock()-started>8000)return;
+      failures=0;
+      if(accept(answer)){
+        result(answer,start);status(...feedback(answer,start));
+      }else status('looking','Try a phone, notebook or ruler. Hold it inside the camera guide.');
+      next=clock()+1200;
+    }catch(error){
+      if(!same())return;
+      failures++;
+      const stop=[400,401,402,403,404].includes(error.status)||failures>=3;
+      next=clock()+(error.status===429?10000:3000);
+      status(stop?'error':'retry',stop?`Live detection stopped: ${error.message}`:'Checking interrupted. Retrying shortly…');
+    }finally{clearTimeout(timeout);if(controller===abort)controller=null;busy=false;}
+  }
+  return {tick,cancel,reset(){cancel();next=0;failures=0;}};
+}
+
+const LIVE_ABILITIES=['bridge','shield','reflect','strike'];
+// Inventory is a history; equipped powers require a recent camera observation.
+function observeLiveItem(game,answer,now){
+  if(answer?.source!=='gemini-decision'||!Array.isArray(answer.acceptedAbilities))return false;
+  const powers=answer.acceptedAbilities.filter(a=>LIVE_ABILITIES.includes(a));
+  // One ambiguous snapshot may be motion blur during a swipe. Preserve only a
+  // briefly confirmed item, never refresh its lease with repeated uncertainty.
+  const prior=game.liveItem,visible=answer.answers?.visible;
+  const ambiguous=visible&&visible.probability>.2&&prior?.powers.length&&
+    prior.powers.some(key=>answer.answers?.[key]?.probability>=.5);
+  if(!powers.length&&ambiguous&&now<prior.expiresAt&&!prior.grace){
+    prior.expiresAt=Math.min(prior.expiresAt,now+1000);prior.grace=true;return true;
+  }
+  game.liveItem={powers,label:answer.label||'Held object',seenAt:now,expiresAt:now+4500};
+  return true;
+}
+function currentLivePowers(game,now){
+  if(!game.liveItem||now>=game.liveItem.expiresAt)return {};
+  return Object.fromEntries(game.liveItem.powers.map(power=>[power,true]));
+}
+function clearLiveItem(game){game.liveItem=null;}
+
+// Local block matching tracks moving foreground features even when a prop hides
+// the fingers. This estimates camera motion; it is not object identification.
+function estimateObjectMotion(previous,current,width,height,region=null){
+  if(!previous||previous.length!==current.length)return {confidence:0,dx:0,dy:0,x:.5,y:.5};
+  const matches=[];let textured=0;
+  const left=Math.max(12,Math.floor((region?.[1]||0)*width)-4),right=Math.min(width-12,Math.ceil((region?.[3]??1)*width)+4);
+  const top=Math.max(12,Math.floor((region?.[0]||0)*height)-4),bottom=Math.min(height-12,Math.ceil((region?.[2]??1)*height)+4);
+  const stride=region?3:6;
+  for(let y=top;y<bottom;y+=stride)for(let x=left;x<right;x+=stride){
+    let mean=0,variance=0;
+    for(let py=-2;py<=2;py++)for(let px=-2;px<=2;px++)mean+=previous[(y+py)*width+x+px];
+    mean/=25;
+    for(let py=-2;py<=2;py++)for(let px=-2;px<=2;px++)variance+=Math.abs(previous[(y+py)*width+x+px]-mean);
+    if(variance/25<14)continue;textured++;
+    function cost(dx,dy){
+      let targetMean=0,error=0;
+      for(let py=-2;py<=2;py++)for(let px=-2;px<=2;px++)targetMean+=current[(y+py+dy)*width+x+px+dx];
+      targetMean/=25;
+      for(let py=-2;py<=2;py++)for(let px=-2;px<=2;px++)error+=Math.abs(previous[(y+py)*width+x+px]-mean-current[(y+py+dy)*width+x+px+dx]+targetMean);
+      return error/25;
+    }
+    const stationary=cost(0,0);if(stationary<7)continue;
+    let best=stationary,dx=0,dy=0;
+    for(let cy=-10;cy<=10;cy+=2)for(let cx=-10;cx<=10;cx+=2){const c=cost(cx,cy);if(c<best){best=c;dx=cx;dy=cy;}}
+    if((dx||dy)&&best<24&&best<stationary*.65)matches.push({dx,dy,x:(x+dx)/width,y:(y+dy)/height});
+  }
+  // Whole-frame displacement is more likely camera movement than a prop swipe.
+  if(matches.length<3||(!region&&matches.length/Math.max(1,textured)>.72))return {confidence:0,dx:0,dy:0,x:.5,y:.5,cameraMoved:matches.length>=3};
+  const median=key=>matches.map(m=>m[key]).sort((a,b)=>a-b)[Math.floor(matches.length/2)];
+  const dx=median('dx'),dy=median('dy');
+  const coherent=matches.filter(m=>Math.abs(m.dx-dx)<=2&&Math.abs(m.dy-dy)<=2);
+  if(coherent.length<3)return {confidence:0,dx:0,dy:0,x:.5,y:.5};
+  return {dx:dx/width,dy:dy/height,x:coherent.reduce((s,m)=>s+m.x,0)/coherent.length,y:coherent.reduce((s,m)=>s+m.y,0)/coherent.length,confidence:coherent.length/matches.length};
+}
+function createPropSwipe(){
+  let previousTime=0,lastMove=0,cooldownUntil=0,travelX=0,travelY=0;
+  return {
+    reset(){previousTime=lastMove=travelX=travelY=0;},
+    update(motion,now,armed){
+      const elapsed=previousTime?(now-previousTime)/1000:.08;previousTime=now;
+      const moving=motion.confidence>=.55&&Math.hypot(motion.dx,motion.dy)/Math.max(.04,elapsed)>.18;
+      if(!armed||elapsed>.3){travelX=travelY=0;return false;}
+      if(!moving){if(now-lastMove>160)travelX=travelY=0;return false;}
+      if(travelX*motion.dx+travelY*motion.dy<0)travelX=travelY=0;
+      travelX+=motion.dx;travelY+=motion.dy;lastMove=now;
+      if(now>=cooldownUntil&&Math.hypot(travelX,travelY)>=.075){cooldownUntil=now+600;travelX=travelY=0;return true;}
+      return false;
+    }
+  };
+}
+
+// Convert cloud coordinates from the actual central crop back to the video.
+function objectFromCrop(item,width,height,now){
+  const side=Math.min(width,height)*.95;
+  const xy=([x,y])=>({x:((width-side)/2+x*side)/width,y:((height-side)/2+y*side)/height});
+  const a=xy([item.box[1],item.box[0]]),b=xy([item.box[3],item.box[2]]);
+  return {...item,box:[a.y,a.x,b.y,b.x],outline:item.outline.map(p=>{const q=xy(p);return [q.x,q.y];}),expiresAt:now+4500};
+}
+function shiftObject(item,motion){
+  if(motion.confidence<.55)return item;
+  const dx=Math.max(-item.box[1],Math.min(1-item.box[3],motion.dx)),dy=Math.max(-item.box[0],Math.min(1-item.box[2],motion.dy));
+  return {...item,box:[item.box[0]+dy,item.box[1]+dx,item.box[2]+dy,item.box[3]+dx],outline:item.outline.map(([x,y])=>[x+dx,y+dy])};
+}
+function videoPoint(x,y,width,height,viewWidth=1280,viewHeight=720){
+  const scale=Math.max(viewWidth/width,viewHeight/height),vw=width*scale,vh=height*scale;
+  return {x:1-((viewWidth-vw)/2+x*vw)/viewWidth,y:((viewHeight-vh)/2+y*vh)/viewHeight};
+}
+
+// Perspective arena with an approximate foreground cutout for located props.
+// No room mapping, depth sensor, or physical collision claim is made here.
+function drawRaid(ctx,g,video,pointer,objects=[]){
+  const w=1280,h=720,r=g.raid,b=g.boss,t=g.clock,exposed=b.state==='exposed';
+  const colour=exposed?'#a2ffe0':'#c7a0ff',hot=b.state==='windup'||b.state==='attack';
+  const videoReady=video?.readyState>=2&&video.videoWidth;
+  function camera(){const scale=Math.max(w/video.videoWidth,h/video.videoHeight),vw=video.videoWidth*scale,vh=video.videoHeight*scale;ctx.save();ctx.translate(w,0);ctx.scale(-1,1);ctx.drawImage(video,(w-vw)/2,(h-vh)/2,vw,vh);ctx.restore();}
+  function line(points,c,width=1){ctx.beginPath();points.forEach((p,i)=>ctx[i?'lineTo':'moveTo'](p.x,p.y));ctx.strokeStyle=c;ctx.lineWidth=width;ctx.stroke();}
+  function glow(x,y,radius,c){const grad=ctx.createRadialGradient(x,y,0,x,y,radius);grad.addColorStop(0,c);grad.addColorStop(1,'transparent');ctx.fillStyle=grad;ctx.fillRect(x-radius,y-radius,radius*2,radius*2);}
+  function ring(x,y,rx,ry,c,width=1,rotation=0,start=0,end=Math.PI*2){ctx.beginPath();ctx.ellipse(x,y,rx,ry,rotation,start,end);ctx.strokeStyle=c;ctx.lineWidth=width;ctx.stroke();}
+  ctx.save();ctx.fillStyle='#080e1d';ctx.fillRect(0,0,w,h);
+  if(videoReady){ctx.save();ctx.filter='saturate(.4) brightness(.45)';camera();ctx.restore();}
+  const sky=ctx.createLinearGradient(0,0,w,h);sky.addColorStop(0,'#090f27a8');sky.addColorStop(.55,'#15102a88');sky.addColorStop(1,'#061b2bd9');ctx.fillStyle=sky;ctx.fillRect(0,0,w,h);
+  glow(630,310,440,exposed?'#1f947e33':'#7042b03d');glow(1100,110,300,'#4aa3b622');
+  // Perspective grid, drifting sparks and broken orbital rings establish depth.
+  ctx.save();ctx.globalAlpha=.24;
+  for(let i=-8;i<=8;i++)line([{x:640+i*25,y:465},{x:640+i*240,y:720}],'#529bba',1);
+  for(let i=0;i<9;i++){const y=465+Math.pow(i/8,2)*255;line([{x:0,y},{x:1280,y}],'#529bba',1);}
+  ctx.restore();
+  const cx=640-r.lean*28,cy=335;
+  for(let i=0;i<3;i++){
+    const radius=192+i*32,a=t*(i%2?-.11:.09)+i;
+    ring(cx,cy,radius,radius*1.05,colour+'35',1,a,a+.15,a+Math.PI*1.55);
+    ring(cx,cy,radius+7,(radius+7)*1.05,colour+'18',3,-a,a+1.8,a+3.5);
+  }
+  for(let i=0;i<44;i++){const a=i*2.399+t*.055,rad=225+(i%5)*8;const x=cx+Math.cos(a)*rad,y=cy+Math.sin(a)*rad;ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.fillStyle=i%4?colour+'44':colour+'bb';ctx.fillRect(-2,-1,i%4?3:9,2);ctx.restore();}
+  for(let i=0;i<45;i++){const x=(i*193.7+Math.sin(t*.3+i)*22)%1280,y=(i*79.3-t*(9+i%5)+7200)%720;ctx.globalAlpha=.18+(i%4)*.13;ctx.fillStyle=i%3?'#a3d9e4':'#f0bbff';ctx.fillRect(x,y,i%4===0?2:1,2);}ctx.globalAlpha=1;
+  if(hot){const pulse=.55+Math.sin(t*7)*.25;ring(cx,cy,100+Math.sin(t*4)*8,100,'#ff948b99',2);glow(cx,cy,150,`rgba(255,90,130,${pulse*.18})`);}
+  const project=([x,y,z])=>({x:640+(x-r.lean*.28)*820/Math.max(.2,z),y:340-y*820/Math.max(.2,z)});
+  const faces=[],yaw=Math.sin(t*.4)*.12+(r.impact>0?Math.sin(t*53)*r.impact*.13:0);
+  const transform=([x,y,z])=>[x*Math.cos(yaw)+z*Math.sin(yaw),y+Math.sin(t*1.5)*.07,z*Math.cos(yaw)-x*Math.sin(yaw)+8.3+r.impact*.5];
+  function face(vertices,base,emissive=false){
+    const [a,b,c]=vertices,u=b.map((n,i)=>n-a[i]),v=c.map((n,i)=>n-a[i]);
+    const n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],len=Math.hypot(...n)||1;
+    const shade=emissive?1:.4+Math.abs((n[0]*-.5+n[1]*.8+n[2]*-.5)/len)*.7;
+    faces.push({vertices,depth:vertices.reduce((sum,p)=>sum+p[2],0)/vertices.length,base,shade,emissive});
+  }
+  function box(x,y,z,sx,sy,sz,base,emissive=false){
+    const p=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]].map(p=>transform([x+p[0]*sx/2,y+p[1]*sy/2,z+p[2]*sz/2]));
+    for(const indices of [[0,1,2,3],[4,7,6,5],[0,4,5,1],[3,2,6,7],[1,5,6,2],[0,3,7,4]])face(indices.map(i=>p[i]),base,emissive);
+  }
+  function crystal(x,y,z,sx,sy,sz,base,emissive=false){
+    const p=[[0,sy,0],[0,-sy,0],[-sx,0,0],[sx,0,0],[0,0,-sz],[0,0,sz]].map(p=>transform([x+p[0],y+p[1],z+p[2]]));
+    for(const indices of [[0,2,4],[0,4,3],[0,3,5],[0,5,2],[1,4,2],[1,3,4],[1,5,3],[1,2,5]])face(indices.map(i=>p[i]),base,emissive);
+  }
+  const armour=[54,69,104],edge=[102,120,158],gold=[159,136,134],energy=exposed?[146,255,213]:[218,143,255];
+  crystal(0,-.1,.08,1.12,1.55,.7,armour);
+  crystal(-.52,.42,-.42,.55,.78,.28,edge);crystal(.52,.42,-.42,.55,.78,.28,[72,85,124]);
+  crystal(0,-1.25,.05,.7,.9,.46,[47,60,98]);
+  crystal(0,1.38,-.04,.61,.7,.5,edge);box(0,1.32,-.49,.8,.28,.12,[19,24,48]);
+  crystal(-.43,2.05,.09,.16,.63,.18,gold);crystal(.43,2.05,.09,.16,.63,.18,gold);
+  for(const side of [-1,1]){
+    const lift=Math.sin(t*1.7+side)*.09+(hot?.15:0);
+    crystal(side*1.22,.55+lift,.06,.58,.66,.54,edge);crystal(side*1.4,.72+lift,-.17,.16,.48,.2,gold);
+    crystal(side*1.28,-.25+lift,-.04,.32,.7,.35,armour);crystal(side*1.34,-.96+lift,-.18,.26,.36,.27,[40,52,84]);
+    for(let i=0;i<3;i++)crystal(side*(1.18+i*.12),-1.27+lift,-.24,.07,.3,.09,[100,115,146]);
+    crystal(side*.43,-1.78,.11,.22,.72,.24,edge);
+    box(side*.24,1.35,-.59,.27,.035,.03,energy,true);
+    for(let i=0;i<3;i++)box(side*(.52-i*.06),.14-i*.27,-.61,.18,.025,.035,energy,true);
+  }
+  crystal(0,0,-.76,exposed?.36:.24,exposed?.53:.38,.15,energy,true);
+  for(let i=0;i<5;i++){const a=t*.45+i*Math.PI*2/5;crystal(Math.cos(a)*2.25,Math.sin(a)*1.8,Math.sin(a)*.5,.11,.23,.14,[137,198,201]);}
+  faces.sort((a,b)=>b.depth-a.depth);
+  for(const f of faces){ctx.beginPath();f.vertices.map(project).forEach((p,i)=>ctx[i?'lineTo':'moveTo'](p.x,p.y));ctx.closePath();const flash=r.impact>0?(r.impact/.6)*30:0;ctx.fillStyle=`rgb(${f.base.map(c=>Math.min(255,Math.round(c*f.shade+flash))).join(',')})`;ctx.fill();ctx.strokeStyle=f.emissive?colour+'bb':'#b5c8f02b';ctx.lineWidth=f.emissive?1.4:.75;ctx.stroke();}
+  const core=project(transform([0,0,-.9]));glow(core.x,core.y,exposed?125:70,exposed?'#79ffd650':'#c784ed45');
+  for(const side of [-1,1]){const eye=project(transform([side*.24,1.35,-.62]));glow(eye.x,eye.y,25,colour+'66');}
+  if(exposed){ring(core.x,core.y,55,55,'#a7ffdb88',1,t,0,Math.PI*1.5);ring(core.x,core.y,68,68,'#a7ffdb33',1,-t,0,Math.PI);}
+  // Draw located real objects AFTER the boss. Their source is live video, not a
+  // generated replacement. Coarse model polygons can include background edges.
+  if(videoReady)for(const item of objects){
+    const points=item.outline.map(([x,y])=>{const p=videoPoint(x,y,video.videoWidth,video.videoHeight);return {x:p.x*w,y:p.y*h};});
+    ctx.save();ctx.beginPath();points.forEach((p,i)=>ctx[i?'lineTo':'moveTo'](p.x,p.y));ctx.closePath();ctx.clip();camera();ctx.restore();
+    const outlineColour=item.roles.includes('shield')?'#aaffdf':'#ffd3a0';ctx.save();ctx.shadowColor=outlineColour;ctx.shadowBlur=12;line([...points,points[0]],outlineColour+'aa',2);ctx.restore();
+  }
+  const hand=pointer||r.shieldPoint,sx=hand.x*w,sy=hand.y*h;
+  if(r.shieldActive||r.parry>0){
+    const shield=objects.find(o=>o.roles.includes('shield'));
+    let outline;
+    if(shield&&videoReady)outline=shield.outline.map(([x,y])=>{const p=videoPoint(x,y,video.videoWidth,video.videoHeight);return {x:p.x*w,y:p.y*h};});
+    else outline=Array.from({length:6},(_,i)=>({x:sx+Math.cos(Math.PI/3*i)*112,y:sy+Math.sin(Math.PI/3*i)*132}));
+    ctx.save();ctx.shadowColor='#a3ffdf';ctx.shadowBlur=r.parry>0?40:16;ctx.beginPath();outline.forEach((p,i)=>ctx[i?'lineTo':'moveTo'](p.x,p.y));ctx.closePath();ctx.fillStyle=r.parry>0?'#caffdf77':'#6dffdc10';ctx.fill();ctx.strokeStyle=r.parry>0?'#fff9cf':'#9dffdd';ctx.lineWidth=r.parry>0?6:2;ctx.stroke();ctx.restore();
+    if(r.parry>0){const q=1-r.parry/.45;ring(sx,sy,90+q*170,100+q*170,`rgba(180,255,222,${1-q})`,4);glow(sx,sy,180,'#c6ffe440');}
+  }
+  for(const bolt of r.bolts){
+    const q=Math.max(0,Math.min(1,(7-bolt.depth)/6.35));
+    const target=bolt.shieldPoint||(r.shieldActive?r.shieldPoint:{x:(640+bolt.lane*170)/w,y:.67});
+    const endX=target.x*w,endY=target.y*h,x=core.x+(endX-core.x)*q,y=core.y+(endY-core.y)*q;
+    const size=9+q*q*(bolt.kind==='beam'?44:26),c=bolt.returning?'#b7ffe1':'#ff8fbc';
+    ctx.save();ctx.shadowColor=c;ctx.shadowBlur=24;const trailQ=Math.max(0,Math.min(1,q+(bolt.returning?.12:-.12)));
+    line([{x:core.x+(endX-core.x)*trailQ,y:core.y+(endY-core.y)*trailQ},{x,y}],c+'aa',Math.max(3,size*.4));
+    glow(x,y,size*3,c+'55');ctx.fillStyle='#fff4e8';ctx.beginPath();ctx.arc(x,y,size*.45,0,Math.PI*2);ctx.fill();ring(x,y,size,size,c,3,t);ring(x,y,size*1.5,size*.6,c+'88',1,-t);ctx.restore();
+  }
+  if(r.slash>0){
+    const q=1-r.slash/.38,dir=r.slashDirection;
+    ctx.save();ctx.globalAlpha=Math.min(1,r.slash*6);ctx.shadowColor='#ffbc81';ctx.shadowBlur=35;
+    for(let i=0;i<3;i++){ctx.beginPath();ctx.moveTo(640-dir*(330+q*90),530-i*8);ctx.bezierCurveTo(640-dir*130,220-i*8,640+dir*60,390-i*8,640+dir*390,190-i*8);ctx.strokeStyle=i===1?'#fffbe5':i===0?'#ffb97577':'#ffd6ae';ctx.lineWidth=i===1?4:i===0?22:2;ctx.stroke();}ctx.restore();
+  }
+  if(r.impact>0){
+    const q=1-r.impact/.6;ctx.save();ctx.globalAlpha=Math.max(0,1-q);for(let i=0;i<20;i++){const a=i*2.399,dist=30+q*180;const x=core.x+Math.cos(a)*dist,y=core.y+Math.sin(a)*dist;line([{x,y},{x:x+Math.cos(a)*15,y:y+Math.sin(a)*15}],'#ffdfaf',i%3?2:4);}ctx.font='700 34px system-ui';ctx.fillStyle='#fff1d5';ctx.textAlign='center';ctx.shadowColor='#ffb96a';ctx.shadowBlur=15;ctx.fillText('-'+r.lastDamage,core.x+80,core.y-35-q*55);ctx.restore();
+  }
+  if(r.combo>1){ctx.font='600 12px system-ui';ctx.textAlign='left';ctx.fillStyle='#ffdbad';ctx.fillText(r.combo+' HIT CHAIN',34,125);}
+  if(r.dodge>0){ctx.fillStyle='#83ceff10';ctx.fillRect(0,0,w,h);line([{x:30,y:210},{x:8,y:360},{x:30,y:510}],'#b7edff',4);line([{x:1250,y:210},{x:1272,y:360},{x:1250,y:510}],'#b7edff',4);}
+  const vignette=ctx.createRadialGradient(640,340,180,640,340,760);vignette.addColorStop(0,'transparent');vignette.addColorStop(1,'#020815c9');ctx.fillStyle=vignette;ctx.fillRect(0,0,w,h);
+  if(g.flash>0){ctx.fillStyle=`rgba(255,65,90,${g.flash})`;ctx.fillRect(0,0,w,h);}
+  ctx.restore();
+}
+
+const $=id=>document.getElementById(id);
+const canvas=$('game'),ctx=canvas.getContext('2d');
+let g=createGame(),paused=false,muted=true,audio=null,lastTime=performance.now(),lastUI=0,lastEvent='',api={configured:false};
+const keys=new Set();let keyPulses={jump:false,attack:false,build:false};let stream=null,handModel=null,handReady=false,handDelegate='GPU',lastHandFrame=0,lastVideoTime=-1,handX=.5,neutral=.5,lastHandX=.5,lastHandAt=0,lastSwipe=0;
+let handInput={move:0,jump:false,guard:false,attack:false},captured=null,selectedAbility='bridge',scanResult=null,scanBusy=false,scanGeneration=0,handGeneration=0,cameraGeneration=0;
+let handPoint={x:.5,y:.65};let lastGesture='none';const scans=[];let cameraEvidence=null;
+const motionCanvas=document.createElement('canvas');motionCanvas.width=128;motionCanvas.height=72;
+const motionCtx=motionCanvas.getContext('2d',{willReadFrequently:true}),propSwipe=createPropSwipe();
+let previousMotion=null,motionAt=0,motionVideoTime=-1,propAttack=false,propDirection=1,propPoint=null,propPointAt=0,motionStrength=0;
+let trackedObjects=[],locatorMessage='Show your held objects in the camera guide.';
+function resetMotion(){previousMotion=null;motionVideoTime=-1;propAttack=false;propPoint=null;motionStrength=0;propSwipe.reset();}
+const esc=s=>String(s); // All untrusted model strings are assigned with textContent.
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const timeLabel=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+function el(tag,className,text){const e=document.createElement(tag);if(className)e.className=className;if(text!==undefined)e.textContent=text;return e;}
+function notify(text,kind='info'){g.events.push({text,kind,time:g.time});if(g.events.length>40)g.events.shift();}
+function blip(freq=480,type='sine',length=.1){if(muted)return;try{audio ||= new AudioContext();audio.resume();const o=audio.createOscillator(),gain=audio.createGain();o.type=type;o.frequency.setValueAtTime(freq,audio.currentTime);o.frequency.exponentialRampToValueAtTime(freq*.55,audio.currentTime+length);gain.gain.setValueAtTime(.045,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+length);o.connect(gain);gain.connect(audio.destination);o.start();o.stop(audio.currentTime+length);}catch{}}
+function modalOpen(){return $('scan-dialog').open||$('help-dialog').open;}
+function setPause(value){resetMotion();if(value){objectLocator.cancel();trackedObjects=[];}if(value){autoWeaver.cancel();clearLiveItem(g);}paused=value;keys.clear();keyPulses={jump:false,attack:false,build:false};handInput={move:0,jump:false,guard:false,attack:false};$('pause-overlay').hidden=!value||g.phase==='title'||g.phase==='dead'||g.phase==='won';$('pause').textContent=value?'▶':'Ⅱ';}
+function runStart(){startGame(g);$('title-overlay').hidden=true;setPause(false);canvas.focus();blip(650);}
+$('start').onclick=runStart;$('boss-demo').onclick=()=>{autoWeaver.reset();clearLiveItem(g);startGame(g);beginBoss(g);$('title-overlay').hidden=true;$('end-overlay').hidden=true;setPause(false);canvas.focus();};$('pause').onclick=()=>setPause(!paused);$('resume').onclick=()=>{setPause(false);canvas.focus();};
+$('retry').onclick=()=>{autoWeaver.reset();if(g.phase==='dead')retry(g);else{g=createGame();scans.length=0;lastEvent='';startGame(g);}setPause(false);$('end-overlay').hidden=true;canvas.focus();refreshPowers();};
+$('sound').onclick=()=>{muted=!muted;$('sound').textContent=muted?'Sound off':'Sound on';$('sound').setAttribute('aria-pressed',String(!muted));blip(550);};
+$('help').onclick=()=>{$('help-dialog').showModal();keys.clear();keyPulses={jump:false,attack:false,build:false};};$('help-close').onclick=()=>$('help-dialog').close();
+$('weave').onclick=()=>{if(!modalOpen()&&!paused){if(buildBridge(g))blip(720,'sine',.5);canvas.focus();}};
+window.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;if(e.key==='Escape'){if(modalOpen())return;setPause(!paused);return;}if(e.key==='?'&&!modalOpen()){$('help-dialog').showModal();return;}if(modalOpen())return;if(['Space','ArrowLeft','ArrowRight','ArrowUp','KeyA','KeyD','KeyW','KeyE','KeyJ','KeyK'].includes(e.code)){e.preventDefault();keys.add(e.code);if(!e.repeat){if(['Space','ArrowUp','KeyW'].includes(e.code))keyPulses.jump=true;if(e.code==='KeyJ')keyPulses.attack=true;if(e.code==='KeyE')keyPulses.build=true;}}if(e.code==='KeyB'&&!e.repeat)openScan();});
+window.addEventListener('keyup',e=>keys.delete(e.code));window.addEventListener('blur',()=>{keys.clear();keyPulses={jump:false,attack:false,build:false};handInput={move:0,jump:false,guard:false,attack:false};});document.addEventListener('visibilitychange',()=>{if(document.hidden&&g.phase!=='title')setPause(true);});
+function refreshPowers(){
+  $('powers').replaceChildren();
+  for(const [key,p] of Object.entries(POWER_INFO)){const power=g.powers[key],b=el('button',`power-tile${power?' unlocked':''}`);b.style.setProperty('--power',p.colour);b.append(el('span','glyph',p.symbol),el('strong','',p.name),el('small','',power?power.label:'Not yet borrowed'),el('span','power-state',power?'✓':'+'));b.setAttribute('aria-label',`${p.name}: ${power?power.label:'not borrowed'}. Open scanner.`);b.onclick=()=>openScan(key);$('powers').append(b);}
+  $('power-count').textContent=`${Object.keys(g.powers).length} / 4`;
+}
+for(const [key,label] of Object.entries({bridge:'Notebook → bridge',shield:'Cardboard → shield',reflect:'Spoon → reflect',strike:'Pen → strike'})){const b=el('button','',label);b.onclick=()=>{$('auto-weave').checked=false;autoWeaver.reset();clearLiveItem(g);unlock(g,key,{label:label.split(' → ')[0],source:'practice',flavour:'Manually selected practice item.'});refreshPowers();blip(500);};$('practice-items').append(b);}
+function refreshUI(){
+  document.body.classList.toggle('raid-mode',!!g.raid);
+  $('health').textContent=Array.from({length:5},(_,i)=>i<g.player.hp?'♥':'♡').join(' ');$('health').setAttribute('aria-label',`${g.player.hp} of 5 health`);$('shards').textContent=`✦ ${g.shards.filter(s=>s.taken).length} / 5`;$('timer').textContent=timeLabel(g.time);
+  const boss=!!g.boss;$('boss-controls').hidden=!boss;$('traverse-controls').hidden=boss;$('chapter-number').textContent=boss?'CHAPTER 02 / 02':'CHAPTER 01 / 02';$('chapter-title').textContent=boss?'The Warden has crossed over.':'The Broken Reach';$('step-reach').classList.toggle('active',!boss);$('step-warden').classList.toggle('active',boss);
+  $('boss-hud').hidden=!boss||g.phase==='won'||g.phase==='dead';if(boss){$('boss-health').style.width=`${g.boss.hp/g.boss.maxHp*100}%`;$('boss-state').textContent=g.raid?.awaitingItem?'SHOW A BOOK OR PEN TO BEGIN':g.boss.state==='exposed'?'CORE EXPOSED — STRIKE':g.boss.state==='windup'?`${g.boss.attack==='beam'?'RIFT BEAM':'ORB VOLLEY'} IN ${Math.max(0,g.boss.timer).toFixed(1)}s`:g.boss.state.toUpperCase();}
+  let [title,detail]=objective(g);if($('auto-weave').checked&&api.configured&&g.phase==='traverse'&&g.bridges.length<2){title='Show an object. Mend the rift.';detail='Approach a glowing gap and hold a phone, notebook or ruler inside the camera guide. The bridge weaves automatically.';}$('objective-title').textContent=title;$('objective-detail').textContent=detail;
+  const text=g.practice?'PRACTICE RUN':g.stats.scans?'LIVE GEMINI RUN':'LOCAL ADVENTURE';$('run-label').textContent=`${text} ✦`;
+  $('weave').disabled=g.phase!=='traverse';$('weave').hidden=boss;
+  const latest=g.events.at(-1);if(latest&&latest.text!==lastEvent){lastEvent=latest.text;$('latest-event').textContent=latest.text;$('world-caption').textContent=latest.text;if(['power','shard','win'].includes(latest.kind))blip(latest.kind==='win'?800:600,'sine',.25);}
+  if(g.phase==='won'||g.phase==='dead'){$('end-overlay').hidden=false;$('end-kicker').textContent=g.phase==='won'?'RIFT MENDED':'YOUR LIGHT IS STILL HERE';$('end-title').textContent=g.phase==='won'?'You brought a world back.':'One more try, little light.';$('end-stats').textContent=`${timeLabel(g.time)} · ${g.shards.filter(s=>s.taken).length}/5 light fragments · ${g.stats.blocks} blocks · ${g.stats.reflects} reflections`;$('end-source').textContent=g.practice?'Practice run · includes manually selected items':g.stats.scans?'Powers evaluated with Gemini Decision':'No AI-evaluated powers used';$('retry').textContent=g.phase==='won'?'Journey again ↗':'Retry encounter ↗';}
+}
+// Camera: live capture and local hand tracking. Cloud scans are separate explicit actions.
+async function listCameras(){if(!navigator.mediaDevices?.enumerateDevices)throw new Error('Open this HTML file directly in Chrome or Edge to use the camera.');const devices=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='videoinput');const selected=stream?.getVideoTracks()[0]?.getSettings().deviceId||$('camera-select').value;$('camera-select').replaceChildren();for(const [i,d] of devices.entries()){const option=el('option','',d.label||`Camera ${i+1}`);option.value=d.deviceId;$('camera-select').append(option);}if(devices.some(d=>d.deviceId===selected))$('camera-select').value=selected;return devices;}
+function clearHand(){handInput={move:0,jump:false,guard:false,attack:false};lastHandAt=0;lastGesture='none';const c=$('hand-overlay');c.getContext('2d').clearRect(0,0,c.width,c.height);}
+function stopCamera(){resetMotion();objectLocator.cancel();trackedObjects=[];autoWeaver.cancel();clearLiveItem(g);cameraEvidence=null;cameraGeneration++;handGeneration++;handReady=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('camera').srcObject=null;$('camera-placeholder').hidden=false;$('camera-badge').textContent='OFFLINE';$('camera-badge').classList.remove('live');$('camera-caption').textContent='NO CAMERA CONNECTED';$('camera-start').disabled=false;$('camera-start').textContent='Connect camera';$('camera-stop').disabled=true;$('hand-toggle').checked=false;$('hand-toggle').disabled=true;$('calibrate').disabled=true;$('tracking-status').textContent='Keyboard controls ready';clearHand();}
+async function connectCamera(deviceId=''){
+  stopCamera();const generation=++cameraGeneration;$('camera-start').disabled=true;$('camera-detail').textContent='Waiting for camera permission…';
+  try{
+    if(!navigator.mediaDevices?.getUserMedia)throw new Error('Open this HTML file directly in Chrome or Edge and allow camera access.');
+    const next=await navigator.mediaDevices.getUserMedia({video:deviceId?{deviceId:{exact:deviceId},width:{ideal:1280},height:{ideal:720}}:{width:{ideal:1280},height:{ideal:720}},audio:false});
+    if(generation!==cameraGeneration){next.getTracks().forEach(t=>t.stop());return;}
+    stream=next;const video=$('camera'),track=next.getVideoTracks()[0];video.srcObject=next;
+    track.onended=()=>{if(stream===next){stopCamera();$('camera-detail').textContent='Camera disconnected. Reconnect or continue with keyboard.';}};
+    $('camera-stop').disabled=false;$('camera-badge').textContent='CHECKING';$('camera-detail').textContent='Checking that video frames are arriving...';
+    await video.play();if(generation!==cameraGeneration)return;
+    $('camera-placeholder').hidden=true;await listCameras();
+    const evidence=await waitForCameraFrames(video,track,{isCurrent:()=>generation===cameraGeneration});
+    if(generation!==cameraGeneration)return;cameraEvidence=evidence;
+    $('camera-badge').textContent='VERIFIED';$('camera-badge').classList.add('live');$('camera-caption').textContent=track.label||'CAMERA LIVE';
+    $('camera-detail').textContent=`${evidence.label} / ${evidence.width} x ${evidence.height} / advancing video verified`;
+    $('hand-toggle').disabled=false;$('hand-toggle').checked=true;enableHands();$('camera-start').textContent='Reconnect';$('camera-start').disabled=false;
+    notify(`Camera frames verified: ${evidence.label}. Select your external device if this is the built-in camera.`);
+  }catch(e){if(generation!==cameraGeneration)return;stopCamera();$('camera-detail').textContent=e.name==='NotAllowedError'?'Camera permission was denied. Allow camera access for this localhost page, then reconnect.':e.name==='NotFoundError'?'No camera was found. Check the external camera connection.':e.name==='NotReadableError'?'Camera is busy. Close other apps using it, then reconnect.':e.message;}
+}
+$('camera-start').onclick=()=>connectCamera($('camera-select').value);$('camera-stop').onclick=stopCamera;$('camera-select').onchange=()=>{if(stream)connectCamera($('camera-select').value);};navigator.mediaDevices?.addEventListener?.('devicechange',()=>listCameras().catch(()=>{}));
+const handLoader=createHandLoader(async delegate=>{
+  const {FilesetResolver,HandLandmarker}=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21/vision_bundle.mjs');
+  const vision=await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21/wasm');
+  return HandLandmarker.createFromOptions(vision,{
+    baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',delegate},
+    runningMode:'VIDEO',numHands:1,minHandDetectionConfidence:.5,minHandPresenceConfidence:.5,minTrackingConfidence:.5
+  });
+});
+function handFailure(error){
+  handReady=false;clearHand();$('hand-toggle').checked=false;$('calibrate').disabled=true;
+  $('tracking-status').textContent=`Hand tracker error: ${String(error?.message||error).slice(0,240)}. Toggle Hand controls to retry.`;
+}
+async function enableHands(cpuOnly=false){
+  const generation=++handGeneration;handReady=false;clearHand();$('calibrate').disabled=true;
+  $('tracking-status').textContent=cpuOnly?'Retrying hand tracking on CPU...':'Loading hand tracker (internet required)...';
+  const slow=setTimeout(()=>{if(generation===handGeneration&&!handReady)$('tracking-status').textContent='Still downloading hand tracker. Check internet access; switch Hand controls off/on to retry.';},15000);
+  try{
+    const ready=await handLoader.load(cpuOnly);
+    if(generation!==handGeneration||!stream||!$('hand-toggle').checked)return;
+    handModel=ready.model;handDelegate=ready.delegate;lastVideoTime=-1;lastHandFrame=0;neutral=.5;handReady=true;
+    $('calibrate').disabled=false;$('tracking-status').textContent=`Ready (${handDelegate}). Show your whole hand, then Center hand.`;
+  }catch(error){if(generation===handGeneration)handFailure(error);}finally{clearTimeout(slow);}
+}
+$('hand-toggle').onchange=()=>{
+  if(!$('hand-toggle').checked){handGeneration++;handReady=false;clearHand();$('tracking-status').textContent='Hand controls off';$('calibrate').disabled=true;return;}
+  if(!stream){$('hand-toggle').checked=false;$('tracking-status').textContent='Connect your camera first.';return;}
+  enableHands();
+};
+$('calibrate').onclick=()=>{if(lastHandAt&&performance.now()-lastHandAt<600){neutral=handX;notify('Hand centered. Pinch to jump; open palm to guard.');blip(450);}else $('tracking-status').textContent='Show one hand before centering.';};
+function trackHand(now){
+  if(!handReady||!handModel||!stream||!$('hand-toggle').checked)return;
+  const v=$('camera');if(v.readyState<2||now-lastHandFrame<80||v.currentTime===lastVideoTime)return;lastHandFrame=now;lastVideoTime=v.currentTime;
+  try{const result=handModel.detectForVideo(v,now),landmarks=result.landmarks?.[0];const hc=$('hand-overlay');hc.width=v.videoWidth;hc.height=v.videoHeight;const hctx=hc.getContext('2d');hctx.clearRect(0,0,hc.width,hc.height);
+    if(!landmarks){clearHand();$('tracking-status').textContent=g.raid?'Fingers hidden? Prop swipes still work locally.':'Show your whole hand to steer and jump.';return;}
+    const p=landmarks;handX=1-p[9].x;handPoint={x:handX,y:p[9].y};const d=(a,b)=>Math.hypot((p[a].x-p[b].x)*v.videoWidth/v.videoHeight,p[a].y-p[b].y);const palm=Math.max(.03,d(0,9));const pinch=d(4,8)/palm<.35;const extended=[8,12,16,20].filter((tip,i)=>d(0,tip)>d(0,[6,10,14,18][i])*1.14).length;const open=extended>=4&&!pinch;
+    const elapsed=lastHandAt?(now-lastHandAt)/1000:1;const velocity=(handX-lastHandX)/Math.max(.04,elapsed);const swipe=lastHandAt&&Math.abs(velocity)>1.7&&now-lastSwipe>650&&!pinch;if(swipe){lastSwipe=now;g.player.face=velocity>0?1:-1;}
+    const offset=handX-neutral;handInput.move=Math.abs(offset)<.055?0:clamp(offset/.2,-1,1);handInput.jump=pinch;handInput.guard=open;handInput.attack=!!swipe;lastHandX=handX;lastHandAt=now;lastGesture=pinch?'PINCH · JUMP':swipe?'SWIPE · STRIKE':open?'PALM · GUARD':'HAND TRACKED';$('tracking-status').textContent=lastGesture;
+    const connections=[[0,1,2,3,4],[0,5,6,7,8],[5,9,10,11,12],[9,13,14,15,16],[13,17,18,19,20],[0,17]];hctx.strokeStyle='#8cead8';hctx.lineWidth=3;for(const line of connections){hctx.beginPath();line.forEach((i,j)=>hctx[j?'lineTo':'moveTo'](p[i].x*hc.width,p[i].y*hc.height));hctx.stroke();}for(const point of p){hctx.beginPath();hctx.arc(point.x*hc.width,point.y*hc.height,4,0,Math.PI*2);hctx.fillStyle='#ffdcad';hctx.fill();}
+  }catch(error){if(handDelegate==='GPU')enableHands(true);else handFailure(error);}
+}
+function trackPropMotion(now){
+  const video=$('camera');
+  if(!stream||!cameraEvidence||!$('prop-motion').checked||g.phase!=='boss'||paused||modalOpen()||document.hidden||video.readyState<2){resetMotion();return;}
+  if(now-motionAt<70||video.currentTime===motionVideoTime)return;
+  motionAt=now;motionVideoTime=video.currentTime;
+  try{
+    motionCtx.drawImage(video,0,0,128,72);
+    const pixels=motionCtx.getImageData(0,0,128,72).data,gray=new Uint8Array(128*72);
+    for(let i=0;i<gray.length;i++)gray[i]=(pixels[i*4]*.299+pixels[i*4+1]*.587+pixels[i*4+2]*.114)|0;
+    const globalMotion=estimateObjectMotion(previousMotion,gray,128,72);
+    let motion=globalMotion;
+    trackedObjects=trackedObjects.filter(item=>now<item.expiresAt).map(item=>{
+      const movement=globalMotion.cameraMoved?{confidence:0}:estimateObjectMotion(previousMotion,gray,128,72,item.box);
+      if(item.roles.includes('strike'))motion=movement;
+      return shiftObject(item,movement);
+    });
+    previousMotion=gray;
+    const powers=liveMode()?currentLivePowers(g,now):g.powers;
+    motionStrength=motion.confidence>=.55?Math.min(1,Math.hypot(motion.dx,motion.dy)*24):0;
+    if(motion.confidence>=.55){propPoint={x:1-motion.x,y:motion.y};propPointAt=now;}
+    if(propSwipe.update(motion,now,!!powers.strike)&&now-lastSwipe>600){
+      propAttack=true;lastSwipe=now;propDirection=motion.dx>0?-1:1;
+    }
+  }catch{resetMotion();$('motion-status').textContent='Camera motion unavailable. J still strikes with an equipped prop.';}
+}
+function currentObjects(now){return trackedObjects.filter(item=>now<item.expiresAt&&!!stream&&!paused&&!modalOpen()&&$('prop-layer').checked);}
+function activePointer(now){
+  const shield=currentObjects(now).find(item=>item.roles.includes('shield'));
+  if(shield){const b=shield.box,v=$('camera');return videoPoint((b[1]+b[3])/2,(b[0]+b[2])/2,v.videoWidth,v.videoHeight);}
+  return lastHandAt&&now-lastHandAt<500?handPoint:propPoint&&now-propPointAt<500?propPoint:null;
+}
+function updateCombatUI(now){
+  const powers=liveMode()?currentLivePowers(g,now):g.powers;
+  const shield=!!(powers.shield||powers.reflect),strike=!!powers.strike;
+  const mode=paused?'paused':shield&&strike?'both':shield?'shield':strike?'strike':'waiting';
+  $('loadout').dataset.mode=mode;
+  $('loadout-title').textContent=paused?'Paused':shield&&strike?'Shield + blade':shield?'Aegis online':strike?'Riftblade online':'Your world. Your weapon.';
+  $('loadout-hint').textContent=paused?'Resume to reacquire your item.':g.practice&&!liveMode()?'Practice: hold K to block. J or a camera swipe strikes.':shield&&strike?'Hold to block. Sweep left or right to strike.':shield?'Keep it in view. Incoming blasts bounce back.':strike?'Sweep across the camera to strike. Fingers can stay hidden.':'Show a book to defend, or a phone or pen to strike.';
+  const located=currentObjects(now);
+  $('location-status').textContent=!$('prop-layer').checked&&locatorMessage.startsWith('Live detection stopped')?locatorMessage:!api.objectTracking?'Restart the local server for object outlines and foreground layering.':!$('prop-layer').checked?'Object outlines off.':located.length?'Located: '+located.map(item=>item.label).join(' + '):locatorMessage;
+  $('shield-indicator').classList.toggle('equipped',shield);$('strike-indicator').classList.toggle('equipped',strike);
+  const on=!!stream&&$('prop-motion').checked&&g.phase==='boss'&&!paused&&!modalOpen();
+  $('motion-meter').style.width=`${Math.round(on?motionStrength*100:0)}%`;
+  $('motion-status').textContent=!stream?'Connect camera for physical controls.':!$('prop-motion').checked?'Prop motion off. Hand tracking and J remain available.':g.phase!=='boss'?'Local prop motion activates in the boss encounter.':paused?'Motion paused.':strike?'Local swipe tracking armed. Sweep smoothly across the guide.':'Local motion ready. Waiting for a recognized attack prop.';
+  $('raid-cue').hidden=!g.raid;
+  if(g.raid){
+    const r=g.raid;
+    const cue=r.awaitingItem?'SHOW AN ITEM TO BEGIN':r.parry>0?'RETURN TO SENDER':r.slash>0?'RIFT STRIKE':g.boss.state==='exposed'?'CORE OPEN — STRIKE NOW':r.shieldActive?'SHIELD READY — HOLD YOUR GROUND':g.boss.state==='windup'?'INCOMING — RAISE YOUR SHIELD':strike?'BLADE READY — SWIPE TO STRIKE':'SHOW A BOOK TO DEFEND';
+    $('raid-cue').textContent=cue;$('raid-cue').dataset.kind=r.parry>0||r.shieldActive?'shield':g.boss.state==='exposed'?'strike':'waiting';
+  }
+}
+$('prop-motion').onchange=resetMotion;
+$('prop-layer').onchange=()=>{locatorMessage='Show your held objects in the camera guide.';trackedObjects=[];objectLocator.reset();};
+$('showcase').onclick=()=>{const on=document.body.classList.toggle('showcase');$('showcase').setAttribute('aria-pressed',String(on));$('showcase').textContent=on?'Exit showcase':'Showcase';};
+// One shared recognition loop: all item properties are evaluated in one call.
+let autoMessageUntil=0,liveDetectionError='';
+function liveMode(){return $('auto-weave').checked&&api.configured;}
+function autoContext(){
+  const v=$('camera');
+  return liveMode()&&!liveDetectionError&&!!stream&&api.liveItems&&cameraEvidence&&v.readyState>=2&&v.videoWidth&&
+    ['traverse','boss'].includes(g.phase)&&!paused&&!modalOpen()&&!scanBusy&&!document.hidden ?
+    {game:g,gap:g.phase==='boss'?'boss':nearGap(g),camera:cameraGeneration}:null;
+}
+function croppedSnapshot(){
+  const v=$('camera'),c=document.createElement('canvas'),size=Math.min(v.videoWidth,v.videoHeight)*.95;
+  c.width=c.height=640;c.getContext('2d').drawImage(v,(v.videoWidth-size)/2,(v.videoHeight-size)/2,size,size,0,0,640,640);
+  return c.toDataURL('image/jpeg',.85);
+}
+const objectLocator=createAutoWeaver({
+  context:()=>{const context=autoContext();return context&&api.objectTracking&&$('prop-layer').checked&&g.phase==='boss'?context:null;},
+  request:async signal=>{
+    const response=await fetch('/api/locate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:croppedSnapshot()}),signal});
+    const answer=await response.json();if(!response.ok)throw Object.assign(new Error(answer.error||'Locator failed'),{status:answer.googleStatus||response.status});return answer;
+  },
+  accept:answer=>answer.source==='gemini-localization'&&Array.isArray(answer.objects),
+  result:answer=>{const v=$('camera');trackedObjects=answer.objects.map(item=>objectFromCrop(item,v.videoWidth,v.videoHeight,performance.now()));},
+  feedback:answer=>['ready',answer.objects.length?'Objects located. Local motion follows between snapshots.':'No held object located. Keep the book or pen inside the guide.'],
+  status:(state,message)=>{locatorMessage=state==='checking'?'Finding the edges of your held objects…':message;if(state==='error'){$('prop-layer').checked=false;trackedObjects=[];}}
+});
+const autoWeaver=createAutoWeaver({
+  context:autoContext,
+  request:async signal=>{
+    const response=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({image:croppedSnapshot(),ability:g.phase==='boss'?'shield':'bridge',mode:'live'}),signal});
+    const answer=await response.json();
+    if(!response.ok)throw Object.assign(new Error(answer.error||'Scan failed'),{status:answer.googleStatus||response.status});
+    if(!Array.isArray(answer.acceptedAbilities))throw Object.assign(new Error('Restart the server for live item recognition.'),{status:400});
+    return answer;
+  },
+  accept:answer=>answer.source==='gemini-decision'&&Array.isArray(answer.acceptedAbilities),
+  result:(answer,target)=>{
+    if(g!==target.game)return;
+    observeLiveItem(g,answer,performance.now());
+    scans.push({...answer,at:new Date().toISOString(),mode:'live-items'});if(scans.length>150)scans.shift();
+    for(const ability of answer.acceptedAbilities){
+      if(!g.powers[ability])unlock(g,ability,{...answer,label:POWER_INFO[ability].short+' prop'});
+    }
+    refreshPowers();
+    if(g.phase==='traverse'&&nearGap(g)>=0&&answer.acceptedAbilities.includes('bridge')&&buildBridge(g))blip(720,'sine',.5);
+  },
+  feedback:answer=>answer.acceptedAbilities.length?['ready','Equipped: '+answer.acceptedAbilities.map(a=>POWER_INFO[a].short).join(' + ')]:['looking','Show one object inside the guide. Your held powers will update automatically.'],
+  status:(state,message)=>{
+    $('auto-status').textContent=message;$('auto-status').dataset.state=state;
+    autoMessageUntil=performance.now()+2500;
+    if(state==='error'){liveDetectionError=message;clearLiveItem(g);notify(message);}
+  }
+});
+$('auto-weave').onchange=()=>{liveDetectionError='';resetMotion();autoWeaver.reset();clearLiveItem(g);autoMessageUntil=0;};
+function updateAutoWeave(now){
+  autoWeaver.tick();
+  objectLocator.tick();
+  const powers=currentLivePowers(g,now);
+  // A recently confirmed bridge prop also works as the hero reaches the anchor.
+  if(autoContext()&&g.phase==='traverse'&&nearGap(g)>=0&&powers.bridge){if(buildBridge(g))blip(720,'sine',.5);}
+  $('held-powers').textContent=g.practice&&!liveMode()?'PRACTICE ITEMS / MANUALLY EQUIPPED':Object.keys(powers).length?'IN HAND: '+Object.keys(powers).map(a=>POWER_INFO[a].short.toUpperCase()).join(' + '):'IN HAND: show an object';
+  const v=$('camera'),guide=$('object-guide');
+  if(v.videoWidth){const preview=v.parentElement,scale=Math.min(preview.clientWidth/v.videoWidth,preview.clientHeight/v.videoHeight);
+    const size=Math.min(v.videoWidth,v.videoHeight)*.95*scale;guide.style.width=guide.style.height=`${size}px`;}
+  guide.hidden=!autoContext();
+  if(liveDetectionError){$('auto-status').textContent=liveDetectionError+' Toggle Live items off/on to retry.';return;}if(now<autoMessageUntil)return;
+  $('auto-status').textContent=!api.configured?'Live items need the server edition with Gemini configured.':
+    !api.liveItems?'Restart START-RIFTMENDER.cmd to enable the updated live-items server.':
+    !$('auto-weave').checked?'Live items off. Manual and practice controls remain available.':
+    !stream?'Connect camera. Hand controls and live item checks start automatically.':
+    paused||modalOpen()?'Live object checks paused.':
+    g.phase==='boss'?'Hold a book to shield. Swipe a recognized phone or pen to strike.':
+    'Show an object as you play. Bridges weave automatically near gaps.';
+}
+// Snapshot scanner. Live results cannot be substituted with manual practice items.
+function abilityButtons(){const target=$('ability-options');target.replaceChildren();for(const [key,p] of Object.entries(POWER_INFO)){const b=el('button',`ability-option${key===selectedAbility?' selected':''}`);b.setAttribute('aria-pressed',String(key===selectedAbility));b.append(el('strong','',`${p.symbol} ${p.name}`),el('small','',p.hint));b.disabled=scanBusy;b.onclick=()=>{selectedAbility=key;scanResult=null;$('apply-power').hidden=true;$('decision-result').hidden=true;abilityButtons();};target.append(b);}}
+function openScan(ability='bridge'){if(modalOpen())return;autoWeaver.cancel();clearLiveItem(g);selectedAbility=typeof ability==='string'&&POWER_INFO[ability]?ability:'bridge';captured=null;scanResult=null;$('capture-image').hidden=true;$('capture-empty').hidden=false;$('apply-power').hidden=true;$('decision-result').hidden=true;$('evaluate').disabled=true;$('scan-status').textContent=api.configured?'Capture a frame, then evaluate the chosen property.':'Gemini is not configured. Add your key locally, or use labelled practice items.';abilityButtons();$('scan-dialog').showModal();keys.clear();keyPulses={jump:false,attack:false,build:false};}
+$('scan-open').onclick=()=>openScan();$('scan-close').onclick=()=>{if(!scanBusy)$('scan-dialog').close();};$('scan-dialog').addEventListener('cancel',e=>{if(scanBusy)e.preventDefault();});$('scan-dialog').addEventListener('close',()=>{scanGeneration++;keys.clear();keyPulses={jump:false,attack:false,build:false};handInput={move:0,jump:false,guard:false,attack:false};});
+$('capture').onclick=()=>{if(scanBusy)return;const v=$('camera');if(!stream||v.readyState<2||!v.videoWidth){$('scan-status').textContent='Connect a camera in the right-hand panel first.';return;}const c=document.createElement('canvas');c.width=640;c.height=Math.round(640*v.videoHeight/v.videoWidth);c.getContext('2d').drawImage(v,0,0,c.width,c.height);captured=c.toDataURL('image/jpeg',.85);$('capture-image').src=captured;$('capture-image').hidden=false;$('capture-empty').hidden=true;scanResult=null;$('apply-power').hidden=true;$('decision-result').hidden=true;$('evaluate').disabled=!api.configured;$('scan-status').textContent=api.configured?'Review the frame. Evaluate sends this image to Google.':'Frame captured locally. Configure Gemini to evaluate it.';};
+$('evaluate').onclick=async()=>{if(!captured||scanBusy)return;const generation=++scanGeneration;scanBusy=true;$('evaluate').disabled=true;$('capture').disabled=true;$('scan-close').disabled=true;$('scan-status').textContent='Evaluating object properties… the game is paused.';abilityButtons();
+  try{const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:captured,ability:selectedAbility}),signal:AbortSignal.timeout(65000)});const result=await r.json();if(!r.ok)throw new Error(result.error||'Scan failed');if(generation!==scanGeneration)return;scanResult=result;scans.push({...result,at:new Date().toISOString()});const box=$('decision-result');box.replaceChildren(el('strong',result.accepted?'result-good':'result-bad',result.accepted?`${result.label} · accepted`:'Another look needed'),el('p','',result.reason));for(const key of ['visible',selectedAbility]){const a=result.answers[key];const row=el('div','result-line');row.append(el('span','',key==='visible'?'Object visible':POWER_INFO[key].name),el('span','',`P ${Math.round(a.probability*100)}% · confidence ${Math.round(a.confidence*100)}%`));box.append(row);}box.append(el('p','micro',`${result.model} · decision ${(result.latencyMs/1000).toFixed(1)}s · real API result`));box.hidden=false;$('apply-power').hidden=!result.accepted;$('scan-status').textContent=result.accepted?result.flavour:'Try another angle, object or ability.';blip(result.accepted?750:250);
+  }catch(e){$('scan-status').textContent=e.name==='TimeoutError'?'Scan timed out. No ability was granted. Try again.':e.message;scanResult=null;$('apply-power').hidden=true;}finally{scanBusy=false;$('capture').disabled=false;$('scan-close').disabled=false;$('evaluate').disabled=!captured||!api.configured;abilityButtons();}
+};
+$('apply-power').onclick=()=>{if(!scanResult?.accepted)return;unlock(g,scanResult.ability,scanResult);refreshPowers();$('scan-dialog').close();canvas.focus();};
+$('export').onclick=()=>{const data={game:'Riftmender',version:'0.4.0',phase:g.phase,durationSeconds:Math.round(g.time),practice:g.practice,powers:g.powers,stats:g.stats,shards:g.shards.filter(s=>s.taken).length,decisions:scans,events:g.events,camera:stream?{verification:cameraEvidence,label:stream.getVideoTracks()[0]?.label,width:$('camera').videoWidth,height:$('camera').videoHeight}:null};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download='riftmender-run.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+async function status(){api={configured:false};$('auto-weave').checked=false;$('auto-weave').disabled=true;$('api-status').textContent='Practice mode - no key needed';$('footer-status').textContent='STANDALONE PRACTICE / NO SERVER NEEDED';document.querySelector('.practice').open=true;}
+// Art direction: entirely procedural, with parallax, geometric stone, glowing filaments and a tiny cloth hero.
+function path(points,fill,stroke=null,width=1){ctx.beginPath();points.forEach((p,i)=>ctx[i?'lineTo':'moveTo'](...p));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke();}}
+function ellipse(x,y,rx,ry,fill){ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill();}
+function line(points,colour,width=1){ctx.beginPath();points.forEach((p,i)=>ctx[i?'lineTo':'moveTo'](...p));ctx.strokeStyle=colour;ctx.lineWidth=width;ctx.stroke();}
+function glow(x,y,r,colour){const gr=ctx.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,colour);gr.addColorStop(1,'transparent');ctx.fillStyle=gr;ctx.fillRect(x-r,y-r,r*2,r*2);}
+function star(x,y,r,colour,rotation=0){ctx.save();ctx.translate(x,y);ctx.rotate(rotation);path([[0,-r],[r*.28,-r*.28],[r,0],[r*.28,r*.28],[0,r],[-r*.28,r*.28],[-r,0],[-r*.28,-r*.28]],colour);ctx.restore();}
+function background(boss){const t=g.clock;const sky=ctx.createLinearGradient(0,0,0,720);sky.addColorStop(0,boss?'#171c35':'#143440');sky.addColorStop(.5,boss?'#3f3449':'#547e83');sky.addColorStop(1,boss?'#1d2335':'#a1b6a2');ctx.fillStyle=sky;ctx.fillRect(0,0,1280,720);
+  // Reality Raid: composite the Warden over the live room. This is a camera
+  // backdrop, not a claim of room tracking or physical surface registration.
+  const video=$('camera');if(boss&&stream&&video.readyState>=2&&video.videoWidth){const scale=Math.max(1280/video.videoWidth,720/video.videoHeight),w=video.videoWidth*scale,h=video.videoHeight*scale;ctx.save();ctx.globalAlpha=.7;ctx.translate(1280,0);ctx.scale(-1,1);ctx.drawImage(video,(1280-w)/2,(720-h)/2,w,h);ctx.restore();ctx.fillStyle='#171b3738';ctx.fillRect(0,0,1280,720);}
+  glow(boss?1000:880,180,340,boss?'#a15d7a45':'#f2d8a344');ellipse(920-g.cameraX*.025,170,72,72,boss?'#a39aa573':'#e5d9b393');ellipse(935-g.cameraX*.025,151,67,68,boss?'#29283e':'#3d646b');
+  for(let layer=0;layer<3;layer++){const base=400+layer*65,pts=[[0,720]];for(let x=-100;x<=1400;x+=80){const worldX=x+g.cameraX*(.08+layer*.07);const y=base-Math.sin(worldX*.004+layer*2)*80-Math.sin(worldX*.011+layer)*25;pts.push([x,y]);}pts.push([1400,720]);path(pts,boss?['#30334b','#272d41','#1b2939'][layer]:['#527a7d','#3a686e','#28525f'][layer]);}
+  for(let i=0;i<7;i++){const x=((i*223-g.cameraX*.18+2000)%1550)-130,y=290+(i*71%190);ctx.globalAlpha=.15;path([[x,y],[x+60,y-15],[x+100,y],[x+70,y+110],[x+20,y+80]],'#c1dbcf');ctx.globalAlpha=1;}
+  ctx.save();ctx.globalAlpha=.11;ctx.fillStyle='#d6f2d4';ctx.translate(820,0);ctx.rotate(.32);ctx.fillRect(0,0,50,900);ctx.fillRect(140,0,18,900);ctx.restore();
+  for(let i=0;i<60;i++){const x=(i*149+Math.sin(t*.25+i)*20-g.cameraX*.1+10000)%1280,y=(i*83+Math.cos(t*.3+i)*25)%680;ctx.globalAlpha=.18+Math.sin(t+i)*.12;ellipse(x,y,1.1+(i%3)*.5,1.1+(i%3)*.5,'#e4fae1');}ctx.globalAlpha=1;
+}
+function island(p){const {x,y,w}=p;if(p.bridge){glow(x+w/2,y,Math.min(210,w),'#8bf8df25');for(let n=0;n<w;n+=25){const rise=Math.sin(g.clock*2+n*.02)*2;path([[x+n,y+rise],[x+n+22,y+rise],[x+n+19,y+13],[x+n+2,y+16]],'#7bcfc2','#b1f8e1',1);}line([[x,y-4],[x+w,y-4]],'#c5ffe9',2);return;}
+  path([[x,y],[x+w,y],[x+w-15,y+35],[x+w*.9,y+64],[x+w*.8,y+155],[x+w*.55,y+210],[x+w*.43,y+168],[x+w*.22,y+185],[x+w*.08,y+86]],'#183b48');
+  path([[x,y+15],[x+w*.35,y+21],[x+w*.43,y+168],[x+w*.22,y+185],[x+w*.08,y+86]],'#234a55');path([[x+w*.35,y+21],[x+w*.69,y+28],[x+w*.55,y+210],[x+w*.43,y+168]],'#14323f');path([[x+w*.69,y+28],[x+w,y+15],[x+w*.9,y+64],[x+w*.8,y+155],[x+w*.55,y+210]],'#254650');
+  path([[x-3,y],[x+10,y-12],[x+w-12,y-12],[x+w+3,y],[x+w-7,y+16],[x+10,y+16]],'#4e7b75');line([[x,y],[x+w,y]],'#a3c2a3',4);line([[x+10,y+4],[x+w-7,y+4]],'#6b9c85',2);
+  for(let i=0;i<w;i+=31){const h=5+(i*7%13);line([[x+i,y-2],[x+i+2,y-h]],'#9cbba0',1);if(i%3===0)line([[x+i+2,y-h],[x+i+7,y-h-3]],'#9cbba0',1);}
+  for(let i=30;i<w;i+=85){const yy=y+32+(i*7%40);line([[x+i,yy],[x+i+15,yy+24],[x+i+8,yy+42]],'#6e958033',1);}
+}
+function ruins(){const cam=g.cameraX;for(const x of [90,1070,1440,1920,2500]){if(x-cam<-200||x-cam>1480)continue;const y=560,h=90+(x%3)*30;ctx.globalAlpha=.8;path([[x,y],[x+25,y],[x+22,y-h],[x+4,y-h-8]],'#365e64');path([[x-6,y-h],[x+31,y-h],[x+31,y-h-12],[x-3,y-h-19]],'#608580');line([[x+8,y-10],[x+8,y-h+12]],'#85aaa13f',2);ctx.globalAlpha=1;}
+  for(const gap of GAPS){for(const x of [gap.x-15,gap.x+gap.w+15]){path([[x-8,560],[x+8,560],[x+5,527],[x-5,527]],'#254e55');star(x,518,9,'#9ef6d7',g.clock*.5);glow(x,518,35,'#82f5d53f');}if(!g.bridges.includes(GAPS.indexOf(gap))){ctx.setLineDash([4,12]);line([[gap.x,560],[gap.x+gap.w,560]],'#91ddc64d',1);ctx.setLineDash([]);ctx.font='11px "Space Grotesk", sans-serif';ctx.textAlign='center';ctx.fillStyle='#b4d8cf';ctx.fillText('WEAVE A WAY FORWARD',gap.x+gap.w/2,610);}}
+}
+function portal(x,y,scale=1){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);glow(0,-75,130,'#7decd044');for(let i=0;i<3;i++){ctx.beginPath();ctx.ellipse(0,-75,42+i*8,78+i*9,Math.sin(g.clock+i)*.06,0,Math.PI*2);ctx.strokeStyle=['#4a8c88','#99ecd6','#c3ffe066'][i];ctx.lineWidth=[8,2,1][i];ctx.stroke();}const gradient=ctx.createRadialGradient(0,-75,0,0,-75,80);gradient.addColorStop(0,'#b3f8ddaa');gradient.addColorStop(1,'#50868411');ellipse(0,-75,38,74,gradient);for(let i=0;i<8;i++){const a=g.clock*.7+i*Math.PI/4;star(Math.cos(a)*55,-75+Math.sin(a)*88,3,'#d0ffe8');}path([[-60,20],[60,20],[53,0],[-53,0]],'#48776d');ctx.restore();}
+function hero(){const p=g.player,t=g.clock;ctx.save();ctx.translate(p.x,p.y);if(p.invuln>0&&Math.floor(t*14)%2)ctx.globalAlpha=.4;const bob=p.grounded?Math.sin(t*8)*1.4:0;ctx.translate(0,bob);ellipse(0,51,22,5,'#09243155');const run=Math.abs(p.vx)>20?Math.sin(t*15)*6:0;line([[-7,36],[-9+run,48]],'#142e37',7);line([[7,36],[9-run,48]],'#142e37',7);
+  path([[-15,10],[13,8],[20,39],[4,36],[-4,42],[-19,35]],'#e5bd88');path([[-15,10],[-5,16],[-9,35],[-19,35]],'#a1765e');path([[-4,14],[12,11],[17,34],[1,32]],'#f2d9a2');
+  line([[-p.face*10,13],[-p.face*(30+Math.abs(p.vx)*.03),12+Math.sin(t*5)*5],[-p.face*47,20+Math.sin(t*5+1)*6]],'#83ded0',6);
+  ellipse(0,1,17,20,'#e2c390');ellipse(p.face*3,4,12,13,'#173543');ellipse(p.face*5-4,2,2.5,3,'#a8ffe5');ellipse(p.face*5+4,2,2.5,3,'#a8ffe5');glow(4,4,22,'#7df6dc18');
+  if(g.powers.strike){ctx.save();ctx.translate(p.face*20,25);ctx.rotate(p.face*.4);path([[0,10],[-3,-25],[0,-38],[4,-25],[4,10]],'#ffd3a3');line([[-7,6],[10,6]],'#b68a63',3);ctx.restore();}
+  if(p.guard){const col=g.powers.reflect?'#d9bbff':'#9ccaff';ctx.save();ctx.translate(p.face*28,17);ctx.scale(p.face,1);ctx.beginPath();ctx.ellipse(0,0,13,37,0,-Math.PI/2,Math.PI/2);ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke();glow(0,0,45,col+'33');for(let i=-1;i<=1;i++)line([[2,i*15],[10,i*15+5]],col,1);ctx.restore();}
+  ctx.restore();
+}
+function bossArt(){const b=g.boss,t=g.clock;const exposed=b.state==='exposed',enraged=b.hp<75;const colour=exposed?'#92f8d5':enraged?'#ff8f80':'#c2a4d9';const x=b.x,y=b.y+Math.sin(t*1.5)*12;glow(x,y,230,exposed?'#86ffd326':'#c45d9930');ellipse(x,560,120,16,'#10152e99');
+  ctx.save();ctx.translate(x,y);for(let i=0;i<4;i++){const a=t*.15+i*Math.PI/2;const px=Math.cos(a)*145,py=Math.sin(a)*105;path([[px-12,py],[px,py-25],[px+14,py],[px,py+29]],'#495168',colour+'55',1);}
+  path([[-90,-50],[-54,-100],[43,-110],[94,-55],[68,80],[32,144],[-27,139],[-77,79]],'#28384e','#68728a',2);path([[-54,-100],[-12,-65],[-22,94],[-27,139],[-77,79],[-90,-50]],'#3f5266');path([[43,-110],[10,-61],[21,98],[32,144],[68,80],[94,-55]],'#202b42');
+  path([[-90,-45],[-144,-17],[-152,61],[-114,84],[-96,36]],'#3d4c63');path([[90,-45],[144,-17],[152,61],[114,84],[96,36]],'#29374e');
+  path([[-55,-100],[-88,-174],[-44,-144],[-23,-106]],'#58667d');path([[35,-108],[73,-177],[62,-124],[54,-99]],'#44516a');
+  path([[-54,-79],[-8,-92],[47,-80],[35,-46],[-33,-43]],'#17263b');line([[-37,-65],[-15,-59]],colour,4);line([[13,-60],[32,-67]],colour,4);
+  ctx.save();ctx.rotate(t*.4);star(0,21,exposed?42:25,colour);ctx.restore();glow(0,20,exposed?90:45,colour+'55');
+  for(let i=0;i<3;i++){const yy=48+i*23;line([[-40,yy],[-28,yy+9],[-32,yy+18]],colour+'66',2);line([[40,yy],[28,yy+9],[32,yy+18]],colour+'66',2);}
+  ctx.restore();
+  if(b.state==='windup'&&b.attack==='beam'){ctx.setLineDash([10,14]);line([[80,502],[b.x-80,502]],'#ffb6a8aa',2);ctx.setLineDash([]);glow(b.x-80,502,30,'#ffab7777');}
+  if(b.state==='attack'&&b.attack==='beam'){const grd=ctx.createLinearGradient(0,460,0,540);grd.addColorStop(0,'#ff8b7600');grd.addColorStop(.5,'#ffb39abb');grd.addColorStop(1,'#ff8b7600');ctx.fillStyle=grd;ctx.fillRect(0,460,b.x-70,80);line([[0,502],[b.x-70,502]],'#ffe3c8',5);}
+}
+function render(){if(g.raid){drawRaid(ctx,g,stream?$('camera'):null,activePointer(performance.now()),currentObjects(performance.now()));return;}const boss=!!g.boss;ctx.save();if(g.shake>0)ctx.translate(Math.sin(g.clock*90)*g.shake*10,Math.cos(g.clock*75)*g.shake*8);background(boss);
+  ctx.save();ctx.translate(-g.cameraX,0);
+  if(boss){for(let i=0;i<9;i++){const x=i*160;path([[x,560],[x+24,560],[x+21,360-i%2*60],[x+3,350-i%2*60]],'#293d4e');line([[x+6,365-i%2*60],[x+6,535]],'#59758144',2);}island({x:-100,w:1480,y:560});bossArt();}
+  else{ruins();for(const p of platforms(g))island(p);for(const s of g.shards){if(s.taken)continue;const y=s.y+Math.sin(g.clock*2+s.x)*6;glow(s.x,y,35,'#ffdf9144');star(s.x,y,9,'#ffe0a1',g.clock*.4);}portal(2700,560);}
+  for(const s of g.shots){const c=s.owner==='enemy'?'#ff8e99':'#ffd2a3';glow(s.x,s.y,28,c+'55');if(s.owner==='enemy'){ellipse(s.x,s.y,s.r,s.r,c);star(s.x,s.y,s.r*.6,'#ffe4c5',g.clock*3);}else{line([[s.x-Math.sign(s.vx)*34,s.y],[s.x,s.y]],c,5);star(s.x,s.y,10,'#fff2c4',g.clock*4);}}
+  hero();for(const p of g.particles){ctx.globalAlpha=clamp(p.life/p.max,0,1);ellipse(p.x,p.y,p.size,p.size,p.colour);}ctx.globalAlpha=1;
+  ctx.restore();const vignette=ctx.createRadialGradient(640,320,250,640,360,800);vignette.addColorStop(0,'transparent');vignette.addColorStop(1,'#07142099');ctx.fillStyle=vignette;ctx.fillRect(0,0,1280,720);if(g.flash>0){ctx.fillStyle=`rgba(255,95,110,${g.flash})`;ctx.fillRect(0,0,1280,720);}ctx.restore();
+}
+function frame(now){const dt=Math.min((now-lastTime)/1000,.033);lastTime=now;trackHand(now);updateAutoWeave(now);trackPropMotion(now);if(lastHandAt&&now-lastHandAt>500)clearHand();const keyboard=(keys.has('ArrowRight')||keys.has('KeyD')?1:0)-(keys.has('ArrowLeft')||keys.has('KeyA')?1:0);const h=$('hand-toggle').checked?handInput:{move:0};const livePowers=currentLivePowers(g,now);step(g,dt,{move:keyboard||h.move||0,jump:keyPulses.jump||keys.has('Space')||keys.has('ArrowUp')||keys.has('KeyW')||h.jump,guard:keys.has('KeyK')||h.guard,attack:keyPulses.attack||keys.has('KeyJ')||h.attack||propAttack,swipeDirection:propAttack?propDirection:g.player.face,build:keyPulses.build||keys.has('KeyE'),paused:paused||modalOpen(),autoWeaveAssist:!!autoContext()&&nearGap(g)>=0,liveMode:liveMode(),livePowers,pointer:activePointer(now)});propAttack=false;handInput.attack=false;keyPulses={jump:false,attack:false,build:false};render();if(now-lastUI>100){refreshUI();updateCombatUI(now);lastUI=now;}requestAnimationFrame(frame);}
+window.addEventListener('pagehide',()=>{objectLocator.cancel();autoWeaver.cancel();clearLiveItem(g);if(stream)stream.getTracks().forEach(t=>t.stop());});
+refreshPowers();status();requestAnimationFrame(frame);
+</script>
+</body></html>
