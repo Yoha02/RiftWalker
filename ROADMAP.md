@@ -1,4 +1,4 @@
-# Riftmender
+# Rift Walker
 
 **Your world is the inventory.** A tiny scavenger crosses a fractured sky island using powers borrowed from physical objects, then faces the Rift Warden.
 

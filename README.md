@@ -1,10 +1,10 @@
-# Riftmender
+# Rift Walker
 
 **Your world is the inventory.**
 
 A phone becomes a bridge. A book becomes a shield. A pen becomes a blade.
 
-Riftmender is a camera-powered adventure built in the **RiftWalker** repository. Guide a small traveler across a broken world, borrow abilities from everyday objects, then face the Rift Warden in a first-person encounter over your camera feed. Gemini evaluates what an object can do; the game turns that decision into a bridge, a defense, or an attack.
+Rift Walker is a hands-on demo that makes learning Google's Decision API and decision APIs in general fun. Clone the repository, try the camera-powered game, and follow how an image becomes a set of answers that your code can act on. Show a phone to build a bridge, a book to raise a shield, or a pen to enable an attack. The demo connects each moment to a simple pattern: define a question, send input, check the response, and apply a rule. Start with no-key practice to explore the game, then configure Gemini to try real API decisions and experiment with the criteria yourself.
 
 ![A real demo run: a phone in the camera view and a woven bridge spanning the gap](docs/images/demo-03-phone-bridge.png)
 
@@ -58,7 +58,7 @@ Hold a phone, closed notebook, ruler or cardboard inside the camera guide. Gemin
 
 *Demo frame: the run displays **LIVE GEMINI RUN**, a phone in the camera view, and a completed bridge. The live-item panel is checking another frame; recognition updates periodically while the woven bridge remains in the world.*
 
-### 4. Face the Rift Warden — Reality Raid
+### 4. Face the Rift Warden - Reality Raid
 
 The second chapter switches to first person. The boss is rendered with perspective geometry over the camera feed when a camera is connected. In live mode, the opening attack cycle waits until the first usable shield, reflection or strike prop has been accepted.
 
@@ -69,7 +69,7 @@ The second chapter switches to first person. The boss is rendered with perspecti
 
 The camera-free arena above is the practice-state illustration. With a live feed, the game adds the room behind the boss. Located object regions can be composited back in front of it; this is approximate foreground compositing, not depth sensing or room mapping.
 
-### 5. Raise a book — Aegis
+### 5. Raise a book - Aegis
 
 A recognized book, lid or broad object equips **Aegis**. Keep it in view: live-mode shielding does not require an open-palm gesture or a separate guard button. An incoming blast reaches the shield, produces an impact effect, then travels back toward the Warden.
 
@@ -82,7 +82,7 @@ A recognized book, lid or broad object equips **Aegis**. Keep it in view: live-m
 
 When object localization is available, the shield follows the located object's region rather than the wrist. In practice mode, equip Cardboard and hold **K** to guard.
 
-### 6. Sweep a pen — Riftblade
+### 6. Sweep a pen - Riftblade
 
 Show a pen, phone or suitable elongated prop and wait for STRIKE to light. Sweep it smoothly left or right. Local motion tracking converts the swipe into an attack, while the boss's current phase determines damage. Hitting an exposed core is more effective than striking its armor.
 
@@ -107,6 +107,8 @@ These are example inputs, not guaranteed recognition results. Lighting, framing 
 The Decision API evaluates these properties independently. An object can qualify for more than one power. Merely naming an object does not grant an ability.
 
 ## How the AI works
+
+In this demo, a decision API answers specific questions about an input, such as whether a held object has a broad surface. The application checks the returned values before granting a power. This is a useful pattern to explore beyond games: model answers inform a decision, while your code defines what happens next.
 
 The application separates **eligibility**, **location**, **movement**, and **game rules**.
 
@@ -148,13 +150,21 @@ Copy-Item .env.example .env
 npm start
 ```
 
-On Windows, you can also double-click **START-RIFTMENDER.cmd**. Keep the terminal open and use the **exact URL printed by the server**: it selects another port if 4173 is occupied. Allow camera access, choose your external camera under **Camera & tracking settings**, and leave **Live items** enabled.
+On Windows, you can also double-click **START-RIFT-WALKER.cmd**. Keep the terminal open and use the **exact URL printed by the server**: it selects another port if 4173 is occupied. Allow camera access, choose your external camera under **Camera & tracking settings**, and leave **Live items** enabled.
 
 The example configuration uses `gemini-4-hydrogen` for vision and `gemini-decision-1` for decisions. Model access, quota and billing depend on your account. `VALIDATE-GEMINI.cmd` checks the saved configuration with a real API request without displaying the key.
 
+### Learn by following one decision
+
+1. **Try the game:** start with the no-key practice mode below to see how bridges, shields and strikes work. Practice uses manual inputs, so it does not call the Decision API.
+2. **Read the questions:** open [`lib/decision.mjs`](lib/decision.mjs). `CRITERIA` defines the object properties, and `decisionRequest` combines an image with explicit questions.
+3. **Follow the request:** find `/api/scan` in [`server.mjs`](server.mjs) to see how the server sends the request while keeping the API key out of browser code.
+4. **Check the answer:** return to `normalizeDecisions` in `lib/decision.mjs` to see how response validation and thresholds determine which powers qualify. Read [`tests/decision.test.mjs`](tests/decision.test.mjs) for accepted, rejected and malformed examples.
+5. **Experiment:** configure Gemini, show an object, then change one criterion or threshold and compare the outcome. Run `npm test` after editing; changing the intended acceptance rules may also require updating the tests.
+
 ### Try it without a key
 
-Open **PLAY-RIFTMENDER.html** in Chrome or Edge, or start the local server without a key. Expand **Practice without Gemini** and equip sample items. This exercises gameplay with manually selected powers and labels the run **Practice**. It does not perform AI object recognition. Optional hand tracking needs internet access to download its model assets.
+Open **PLAY-RIFT-WALKER.html** in Chrome or Edge, or start the local server without a key. Expand **Practice without Gemini** and equip sample items. This exercises gameplay with manually selected powers and labels the run **Practice**. It does not perform AI object recognition. Optional hand tracking needs internet access to download its model assets.
 
 | Action | Keyboard | Camera input |
 | --- | --- | --- |

@@ -1,9 +1,9 @@
 {
-  "name": "riftmender",
+  "name": "rift-walker",
   "version": "0.4.0",
   "private": true,
   "type": "module",
-  "description": "A camera-controlled adventure where real objects repair a broken world.",
+  "description": "A hands-on demo for learning Google's Decision API through a camera-powered game.",
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test tests/*.test.mjs"
