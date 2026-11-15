@@ -76,8 +76,8 @@ server.on('error',error=>{
     console.log(`Port ${listeningPort} is occupied. Trying ${listeningPort+1}...`);
     listeningPort++;server.listen(listeningPort,'127.0.0.1');return;
   }
-  console.error(`Could not start Riftmender (${error.code||'error'}): ${error.message}`);
+  console.error(`Could not start Rift Walker (${error.code||'error'}): ${error.message}`);
   process.exitCode=1;
 });
-server.on('listening',()=>console.log(`Riftmender is ready at http://127.0.0.1:${listeningPort}\nGemini: ${API_KEY?'configured (access not yet verified)':'not configured; practice mode available'}\nKeep this window open. Use the exact URL above.`));
+server.on('listening',()=>console.log(`Rift Walker is ready at http://127.0.0.1:${listeningPort}\nGemini: ${API_KEY?'configured (access not yet verified)':'not configured; practice mode available'}\nKeep this window open. Use the exact URL above.`));
 server.listen(listeningPort,'127.0.0.1');

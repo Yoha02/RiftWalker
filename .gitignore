@@ -5,4 +5,4 @@ node_modules/
 *.log
 artifacts/
 
-riftmender-source.zip
+*-source.zip

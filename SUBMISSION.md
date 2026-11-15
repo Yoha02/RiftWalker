@@ -1,4 +1,4 @@
-# Riftmender submission
+# Rift Walker submission
 
 Status: MLH draft saved; final submission blocked by required repository and demo-video links.
 
@@ -6,7 +6,7 @@ Source repository: https://github.com/Yoha02/RiftWalker
 
 ## Project name
 
-Riftmender
+Rift Walker
 
 ## Short pitch
 
@@ -14,7 +14,7 @@ Your world is the inventory: borrow powers from everyday objects to cross a brok
 
 ## Description
 
-Riftmender combines a short platforming adventure with a camera-backed boss encounter. In The Broken Reach, a small hero crosses floating islands using spectral bridges borrowed from the shapes of real objects. A notebook or ruler can represent a bridge; a broad surface can become a shield; a shiny object can unlock reflection; an elongated prop can unlock a stronger fantasy strike.
+Rift Walker combines a short platforming adventure with a camera-backed boss encounter. In The Broken Reach, a small hero crosses floating islands using spectral bridges borrowed from the shapes of real objects. A notebook or ruler can represent a bridge; a broad surface can become a shield; a shiny object can unlock reflection; an elongated prop can unlock a stronger fantasy strike.
 
 At the portal, the adventure becomes Reality Raid. The Rift Warden appears over the player's live camera backdrop. Players read attack warnings, defend against orb volleys and beams, then counterattack while the boss's core is exposed. The encounter includes a faster second phase, retries and a victory state.
 

@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title Riftmender local server
+title Rift Walker local server
 set "RIFT_NODE=C:\Program Files\nodejs\node.exe"
 if not exist "%RIFT_NODE%" (
   echo Node.js was not found at C:\Program Files\nodejs\node.exe
@@ -9,9 +9,9 @@ if not exist "%RIFT_NODE%" (
   pause
   exit /b 1
 )
-echo Riftmender - local practice mode works without a Gemini key.
+echo Rift Walker - local practice mode works without a Gemini key.
 echo Keep this window open while playing.
-echo Open the exact URL printed after "Riftmender is ready" below.
+echo Open the exact URL printed after "Rift Walker is ready" below.
 echo If port 4173 is busy, the server will choose the next available port.
 echo Press Ctrl+C to stop the server.
 echo.

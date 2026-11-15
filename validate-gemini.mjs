@@ -42,5 +42,5 @@ if(models){
   });
 }
 console.log('\n'+(failed?'One or more checks failed. Share the status messages above; do not share the key.':'Key and configured model requests succeeded. Camera-image recognition still needs an in-game test.'));
-console.log('Use START-RIFTMENDER.cmd and http://127.0.0.1:4173 for Gemini. The standalone HTML disables API calls.');
+console.log('Use START-RIFT-WALKER.cmd and http://127.0.0.1:4173 for Gemini. The standalone HTML disables API calls.');
 process.exitCode=failed?1:0;

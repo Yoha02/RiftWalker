@@ -6,7 +6,7 @@ Have a book, phone and pen ready. Connect the camera and leave Live items enable
 
 "This book is my shield. This pen is my sword. And the objects on my desk are my inventory.
 
-This is Riftmender: a camera-powered adventure where you borrow abilities from the real world."
+This is Rift Walker: a hands-on demo for learning Google's Decision API through a camera-powered game. You can clone the repo, try it, and follow how an image becomes an answer the game can act on."
 
 [Approach the first gap.]
 
@@ -34,7 +34,7 @@ This is Riftmender: a camera-powered adventure where you borrow abilities from t
 
 [Finish on a reflection, a strike or victory.]
 
-"Riftmender turns everyday objects into meaningful game mechanics. Your world is the inventory."
+"Clone Rift Walker to explore the questions, check how the answers unlock powers, and try your own criteria. Start with no-key practice, then connect Gemini to learn from real API decisions."
 
 ## If recognition hesitates
 

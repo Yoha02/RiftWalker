@@ -23,7 +23,7 @@ The updated multi-power recognition endpoint needs a server restart and a real-o
 
 ## Still requires a browser/device pass
 
-`PLAY-RIFTMENDER.html` is now a standalone practice edition bundling the HTML, CSS and local JavaScript. Its embedded JavaScript passes Node's syntax check and it has no external script tags or local module imports. Optional hand tracking still imports MediaPipe over the network. This edition has not been visually or physically camera-tested. It avoids the failed loopback-server dependency; it does not repair the assistant's unavailable browser-control connection.
+`PLAY-RIFT-WALKER.html` is now a standalone practice edition bundling the HTML, CSS and local JavaScript. Its embedded JavaScript passes Node's syntax check and it has no external script tags or local module imports. Optional hand tracking still imports MediaPipe over the network. This edition has not been visually or physically camera-tested. It avoids the failed loopback-server dependency; it does not repair the assistant's unavailable browser-control connection.
 
 - Visual inspection and a complete manual playthrough.
 - External camera selection, moving preview, exact device label and resolution.
@@ -34,7 +34,7 @@ The updated multi-power recognition endpoint needs a server restart and a real-o
 
 ## Why these checks are incomplete
 
-The user subsequently supplied a Chrome screenshot showing `ERR_CONNECTION_TIMED_OUT` at the local URL. This establishes that the page was not reachable in that attempt. Another server launch did not remain available across tool calls, and a direct HTTP probe returned a socket-access denial. Use `START-RIFTMENDER.cmd` from the user's normal desktop session and verify the page loads before proceeding with camera tests. The earlier startup message alone did not establish reachability.
+The user subsequently supplied a Chrome screenshot showing `ERR_CONNECTION_TIMED_OUT` at the local URL. This establishes that the page was not reachable in that attempt. Another server launch did not remain available across tool calls, and a direct HTTP probe returned a socket-access denial. Use `START-RIFT-WALKER.cmd` from the user's normal desktop session and verify the page loads before proceeding with camera tests. The earlier startup message alone did not establish reachability.
 
 The computer-control tool returned `failed to launch codex app-server: program not found`. The app's preview-opening tool also failed. A shell HTTP smoke test was blocked by the environment with `connect EACCES 127.0.0.1:4173`; this prevents treating a server startup message as a successful browser response. These are verification limits, not evidence that the camera is missing or that the game fails to serve in the user's Chrome.
 

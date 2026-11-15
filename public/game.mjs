@@ -236,7 +236,7 @@ function updateAutoWeave(now){
   guide.hidden=!autoContext();
   if(liveDetectionError){$('auto-status').textContent=liveDetectionError+' Toggle Live items off/on to retry.';return;}if(now<autoMessageUntil)return;
   $('auto-status').textContent=!api.configured?'Live items need the server edition with Gemini configured.':
-    !api.liveItems?'Restart START-RIFTMENDER.cmd to enable the updated live-items server.':
+    !api.liveItems?'Restart START-RIFT-WALKER.cmd to enable the updated live-items server.':
     !$('auto-weave').checked?'Live items off. Manual and practice controls remain available.':
     !stream?'Connect camera. Hand controls and live item checks start automatically.':
     paused||modalOpen()?'Live object checks paused.':
@@ -253,7 +253,7 @@ $('evaluate').onclick=async()=>{if(!captured||scanBusy)return;const generation=+
   }catch(e){$('scan-status').textContent=e.name==='TimeoutError'?'Scan timed out. No ability was granted. Try again.':e.message;scanResult=null;$('apply-power').hidden=true;}finally{scanBusy=false;$('capture').disabled=false;$('scan-close').disabled=false;$('evaluate').disabled=!captured||!api.configured;abilityButtons();}
 };
 $('apply-power').onclick=()=>{if(!scanResult?.accepted)return;unlock(g,scanResult.ability,scanResult);refreshPowers();$('scan-dialog').close();canvas.focus();};
-$('export').onclick=()=>{const data={game:'Riftmender',version:'0.4.0',phase:g.phase,durationSeconds:Math.round(g.time),practice:g.practice,powers:g.powers,stats:g.stats,shards:g.shards.filter(s=>s.taken).length,decisions:scans,events:g.events,camera:stream?{verification:cameraEvidence,label:stream.getVideoTracks()[0]?.label,width:$('camera').videoWidth,height:$('camera').videoHeight}:null};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download='riftmender-run.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('export').onclick=()=>{const data={game:'Rift Walker',version:'0.4.0',phase:g.phase,durationSeconds:Math.round(g.time),practice:g.practice,powers:g.powers,stats:g.stats,shards:g.shards.filter(s=>s.taken).length,decisions:scans,events:g.events,camera:stream?{verification:cameraEvidence,label:stream.getVideoTracks()[0]?.label,width:$('camera').videoWidth,height:$('camera').videoHeight}:null};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download='rift-walker-run.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 async function status(){try{const r=await fetch('/api/status');api=await r.json();$('api-status').textContent='';$('api-status').append(el('i'),document.createTextNode(api.configured?'Gemini configured':'Gemini setup needed'));$('api-status').classList.toggle('ready',api.configured);$('footer-status').textContent=api.configured?'GEMINI KEY CONFIGURED · ACCESS UNTESTED':'LOCAL PROTOTYPE · PRACTICE AVAILABLE';}catch{$('api-status').textContent='Server unavailable';}}
 // Art direction: entirely procedural, with parallax, geometric stone, glowing filaments and a tiny cloth hero.
 function path(points,fill,stroke=null,width=1){ctx.beginPath();points.forEach((p,i)=>ctx[i?'lineTo':'moveTo'](...p));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke();}}
